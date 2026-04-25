@@ -1,4 +1,5 @@
 import { Logo } from "components/elements/Logo"
+import { Nav } from "components/elements/Nav"
 import "./reset.css"
 
 const siteUrl = "https://onqai.reload.co.jp"
@@ -32,10 +33,14 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
             backgroundColor: "#333",
             boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
             padding: ".5rem 1rem",
-            position: "relative",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: "1rem",
           }}
         >
           <Logo />
+          <Nav />
         </header>
         <main
           style={{
