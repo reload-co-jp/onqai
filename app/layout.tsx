@@ -1,4 +1,4 @@
-import { Title } from "components/elements/layout"
+import { Logo } from "components/elements/Logo"
 import "./reset.css"
 
 const siteUrl = "https://onqai.reload.co.jp"
@@ -35,7 +35,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
             position: "relative",
           }}
         >
-          <Title>音当てゲーム</Title>
+          <Logo />
         </header>
         <main
           style={{
