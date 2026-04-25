@@ -2,8 +2,8 @@ import { Title } from "components/elements/layout"
 import "./reset.css"
 
 export const metadata = {
-  title: "Page title",
-  description: "Page description",
+  title: "音当てゲーム",
+  description: "再生された単音を聴いて、どの音階か当てるゲームです。音感トレーニングや耳の練習に使えます。",
 }
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
@@ -18,7 +18,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
             position: "relative",
           }}
         >
-          <Title>Page title</Title>
+          <Title>音当てゲーム</Title>
         </header>
         <main
           style={{
@@ -37,7 +37,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
             padding: "1rem",
           }}
         >
-          <p>&copy; My organization</p>
+          <p>&copy; Onqai</p>
         </footer>
       </body>
     </html>
