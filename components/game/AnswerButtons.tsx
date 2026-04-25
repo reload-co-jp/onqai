@@ -55,9 +55,14 @@ export const AnswerButtons: FC<Props> = ({
             fontWeight: "bold",
             minWidth: "3.5rem",
             opacity: disabled && !isLastAnswer && !isCorrectNote ? 0.5 : 1,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: ".125rem",
           }}
         >
-          {note.label}
+          <span>{note.label}</span>
+          <span style={{ fontSize: ".75rem", fontWeight: "normal", opacity: 0.75 }}>{note.solfege}</span>
         </button>
       )
     })}

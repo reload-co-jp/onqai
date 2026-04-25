@@ -3,6 +3,7 @@ export type OscillatorWaveType = "sine" | "square" | "sawtooth" | "triangle"
 export type Note = {
   id: string
   label: string
+  solfege: string
   frequency: number
 }
 
