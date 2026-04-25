@@ -8,6 +8,7 @@ import { DifficultySelector } from "components/game/DifficultySelector"
 import { AnswerButtons } from "components/game/AnswerButtons"
 import { ScoreBoard } from "components/game/ScoreBoard"
 import { FeedbackMessage } from "components/game/FeedbackMessage"
+import { WaveVisualizer } from "components/game/WaveVisualizer"
 
 const initialState: GameState = {
   currentNote: null,
@@ -129,6 +130,8 @@ export const GamePanel: FC = () => {
         <WaveTypeSelector value={state.selectedWaveType} onChange={handleWaveChange} />
         <DifficultySelector value={state.difficulty} onChange={handleDifficultyChange} />
       </div>
+
+      <WaveVisualizer isPlaying={isPlaying} />
 
       <div style={{ display: "flex", gap: ".75rem", flexWrap: "wrap", alignItems: "center" }}>
         <button

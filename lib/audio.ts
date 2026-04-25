@@ -1,13 +1,21 @@
 let audioContext: AudioContext | null = null
+let analyserNode: AnalyserNode | null = null
 
 function getAudioContext(): AudioContext {
   if (!audioContext) {
     audioContext = new AudioContext()
+    analyserNode = audioContext.createAnalyser()
+    analyserNode.fftSize = 2048
+    analyserNode.connect(audioContext.destination)
   }
   if (audioContext.state === "suspended") {
     audioContext.resume()
   }
   return audioContext
+}
+
+export function getAnalyser(): AnalyserNode | null {
+  return analyserNode
 }
 
 export function playTone(params: {
@@ -23,7 +31,7 @@ export function playTone(params: {
   const gainNode = ctx.createGain()
 
   oscillator.connect(gainNode)
-  gainNode.connect(ctx.destination)
+  gainNode.connect(analyserNode!)
 
   oscillator.type = type
   oscillator.frequency.setValueAtTime(frequency, ctx.currentTime)
