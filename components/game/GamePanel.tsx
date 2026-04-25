@@ -6,6 +6,7 @@ import { getRandomNote, judgeAnswer, getNotesByDifficulty } from "lib/game"
 import { WaveTypeSelector } from "components/game/WaveTypeSelector"
 import { DifficultySelector } from "components/game/DifficultySelector"
 import { AnswerButtons } from "components/game/AnswerButtons"
+import { PianoKeyboard } from "components/game/PianoKeyboard"
 import { ScoreBoard } from "components/game/ScoreBoard"
 import { FeedbackMessage } from "components/game/FeedbackMessage"
 import { WaveVisualizer } from "components/game/WaveVisualizer"
@@ -24,6 +25,7 @@ const initialState: GameState = {
 export const GamePanel: FC = () => {
   const [state, setState] = useState<GameState>(initialState)
   const [isPlaying, setIsPlaying] = useState(false)
+  const [answerMode, setAnswerMode] = useState<"buttons" | "keyboard">("buttons")
 
   const currentNotes = getNotesByDifficulty(state.difficulty)
 
@@ -166,16 +168,47 @@ export const GamePanel: FC = () => {
         </button>
       </div>
 
+      <div style={{ display: "flex", gap: ".5rem" }}>
+        {(["buttons", "keyboard"] as const).map((mode) => (
+          <button
+            key={mode}
+            onClick={() => setAnswerMode(mode)}
+            style={{
+              padding: ".375rem .875rem",
+              borderRadius: ".375rem",
+              border: `1px solid ${answerMode === mode ? "#7c6bf0" : "#555"}`,
+              backgroundColor: answerMode === mode ? "#3a3270" : "transparent",
+              color: answerMode === mode ? "#c4b8ff" : "#888",
+              cursor: "pointer",
+              fontSize: ".8rem",
+            }}
+          >
+            {mode === "buttons" ? "ボタン" : "鍵盤"}
+          </button>
+        ))}
+      </div>
+
       {state.currentNote && (
         <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-          <AnswerButtons
-            notes={currentNotes}
-            onAnswer={handleAnswer}
-            disabled={!canAnswer}
-            lastAnswer={state.lastAnswer}
-            lastResult={state.lastResult}
-            currentNote={state.currentNote}
-          />
+          {answerMode === "buttons" ? (
+            <AnswerButtons
+              notes={currentNotes}
+              onAnswer={handleAnswer}
+              disabled={!canAnswer}
+              lastAnswer={state.lastAnswer}
+              lastResult={state.lastResult}
+              currentNote={state.currentNote}
+            />
+          ) : (
+            <PianoKeyboard
+              notes={currentNotes}
+              onAnswer={handleAnswer}
+              disabled={!canAnswer}
+              lastAnswer={state.lastAnswer}
+              lastResult={state.lastResult}
+              currentNote={state.currentNote}
+            />
+          )}
           <FeedbackMessage result={state.lastResult} currentNote={state.currentNote} />
         </div>
       )}
