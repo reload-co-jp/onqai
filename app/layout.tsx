@@ -41,7 +41,6 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
           style={{
             background: "#222",
             minHeight: "calc(100dvh - 5.625rem)",
-            padding: "1rem",
           }}
         >
           {children}

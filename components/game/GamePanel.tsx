@@ -107,25 +107,7 @@ export const GamePanel: FC = () => {
   const canAnswer = state.currentNote !== null && state.lastResult === null
 
   return (
-    <div style={{ maxWidth: "600px", margin: "0 auto", display: "flex", flexDirection: "column", gap: "1.5rem" }}>
-      <div
-        style={{
-          padding: "1rem",
-          backgroundColor: "#2a2a2a",
-          borderRadius: ".5rem",
-          border: "1px solid #444",
-          fontSize: ".875rem",
-          color: "#aaa",
-          lineHeight: 1.6,
-        }}
-      >
-        <p>再生された単音を聴いて、どの音階か当ててみましょう。</p>
-        <p>音色を変えると、同じ音階でも聞こえ方が変わります。</p>
-        <p style={{ marginTop: ".25rem", color: "#666" }}>
-          音量に注意して、再生ボタンを押してください。
-        </p>
-      </div>
-
+    <div style={{ maxWidth: "600px", margin: "0 auto", padding: "0 1rem 2rem", display: "flex", flexDirection: "column", gap: "1.5rem" }}>
       <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
         <WaveTypeSelector value={state.selectedWaveType} onChange={handleWaveChange} />
         <DifficultySelector value={state.difficulty} onChange={handleDifficultyChange} />
