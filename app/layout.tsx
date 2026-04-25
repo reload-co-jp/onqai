@@ -1,9 +1,26 @@
 import { Title } from "components/elements/layout"
 import "./reset.css"
 
+const siteUrl = "https://onqai.reload.co.jp"
+const description = "再生された単音を聴いて、どの音階か当てるゲームです。音感トレーニングや耳の練習に使えます。"
+
 export const metadata = {
   title: "音当てゲーム",
-  description: "再生された単音を聴いて、どの音階か当てるゲームです。音感トレーニングや耳の練習に使えます。",
+  description,
+  metadataBase: new URL(siteUrl),
+  openGraph: {
+    title: "音当てゲーム",
+    description,
+    url: siteUrl,
+    siteName: "音当てゲーム",
+    locale: "ja_JP",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "音当てゲーム",
+    description,
+  },
 }
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
