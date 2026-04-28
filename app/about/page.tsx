@@ -3,9 +3,52 @@ import Link from "next/link"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "音痴は治せる | 音当てゲーム",
+  title: "音痴は治せる",
   description:
     "音階を識別する耳を育てることで、音痴は改善できます。音感トレーニングの仕組みと、このアプリでの練習方法を解説します。",
+  alternates: {
+    canonical: "/about/",
+  },
+  openGraph: {
+    title: "音痴は治せる | 音当てゲーム",
+    description:
+      "音階を識別する耳を育てることで、音痴は改善できます。音感トレーニングの仕組みと、このアプリでの練習方法を解説します。",
+    url: "https://onqai.reload.co.jp/about/",
+    type: "article",
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "音当てゲーム",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "音痴は治せる | 音当てゲーム",
+    description:
+      "音階を識別する耳を育てることで、音痴は改善できます。音感トレーニングの仕組みと、このアプリでの練習方法を解説します。",
+  },
+}
+
+const articleJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: "音痴は、治せる。",
+  description:
+    "音階を識別する耳を育てることで、音痴は改善できます。音感トレーニングの仕組みと、このアプリでの練習方法を解説します。",
+  url: "https://onqai.reload.co.jp/about/",
+  mainEntityOfPage: "https://onqai.reload.co.jp/about/",
+  inLanguage: "ja",
+  author: {
+    "@type": "Organization",
+    name: "Onqai",
+  },
+  publisher: {
+    "@type": "Organization",
+    name: "Onqai",
+  },
 }
 
 const Section: FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => (
@@ -49,6 +92,10 @@ const Page: FC = () => (
       padding: "2.5rem 1.25rem 4rem",
     }}
   >
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+    />
     {/* ページヒーロー */}
     <div style={{ marginBottom: "2.5rem", textAlign: "center" }}>
       <p

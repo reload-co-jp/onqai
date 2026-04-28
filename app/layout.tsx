@@ -1,33 +1,90 @@
 import { Logo } from "components/elements/Logo"
 import { Nav } from "components/elements/Nav"
+import type { Metadata, Viewport } from "next"
 import "./reset.css"
 
 const siteUrl = "https://onqai.reload.co.jp"
-const description = "再生された単音を聴いて、どの音階か当てるゲームです。音感トレーニングや耳の練習に使えます。"
+const title = "音当てゲーム"
+const description =
+  "再生された単音を聴いて音階を当てる、無料の音感トレーニングゲームです。初級から上級まで、耳の練習や音痴改善の基礎練習に使えます。"
+const ogImage = "/opengraph-image"
 
-export const metadata = {
-  title: "音当てゲーム",
-  description,
+export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
+  applicationName: title,
+  title: {
+    default: `${title} | 無料の音感トレーニング`,
+    template: `%s | ${title}`,
+  },
+  description,
+  keywords: [
+    "音当てゲーム",
+    "音感トレーニング",
+    "耳トレ",
+    "音痴 改善",
+    "音階 練習",
+    "絶対音感",
+    "相対音感",
+  ],
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
-    title: "音当てゲーム",
+    title: `${title} | 無料の音感トレーニング`,
     description,
     url: siteUrl,
-    siteName: "音当てゲーム",
+    siteName: title,
     locale: "ja_JP",
     type: "website",
+    images: [
+      {
+        url: ogImage,
+        width: 1200,
+        height: 630,
+        alt: title,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "音当てゲーム",
+    title: `${title} | 無料の音感トレーニング`,
     description,
+    images: [ogImage],
   },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+}
+
+export const viewport: Viewport = {
+  themeColor: "#222222",
+}
+
+const websiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: title,
+  url: siteUrl,
+  inLanguage: "ja",
+  description,
 }
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="ja">
       <body>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+        />
         <header
           style={{
             backgroundColor: "#333",
