@@ -21,9 +21,34 @@ const initialState: GameState = {
   lastResult: null,
 }
 
+const DIFFICULTY_LABELS: Record<Difficulty, string> = {
+  easy: "初級",
+  normal: "中級",
+  hard: "上級",
+}
+
+const WAVE_TYPE_LABELS: Record<OscillatorWaveType, string> = {
+  sine: "サイン波",
+  square: "矩形波",
+  sawtooth: "のこぎり波",
+  triangle: "三角波",
+}
+
+const createShareText = (state: GameState) => {
+  const accuracy = Math.round((state.correctCount / state.totalCount) * 100)
+
+  return [
+    "音当てゲームの結果",
+    `${state.correctCount}/${state.totalCount}問正解（正答率${accuracy}%）`,
+    `連続正解: ${state.streak}`,
+    `難易度: ${DIFFICULTY_LABELS[state.difficulty]} / 音色: ${WAVE_TYPE_LABELS[state.selectedWaveType]}`,
+  ].join("\n")
+}
+
 export const GamePanel: FC = () => {
   const [state, setState] = useState<GameState>(initialState)
   const [isPlaying, setIsPlaying] = useState(false)
+  const [shareMessage, setShareMessage] = useState<string | null>(null)
 
   const currentNotes = getNotesByDifficulty(state.difficulty)
 
@@ -70,10 +95,12 @@ export const GamePanel: FC = () => {
 
   const handleReset = useCallback(() => {
     setState(initialState)
+    setShareMessage(null)
   }, [])
 
   const handleWaveChange = useCallback((type: OscillatorWaveType) => {
     setState((prev) => ({ ...prev, selectedWaveType: type }))
+    setShareMessage(null)
   }, [])
 
   const handleDifficultyChange = useCallback((difficulty: Difficulty) => {
@@ -84,7 +111,33 @@ export const GamePanel: FC = () => {
       lastAnswer: null,
       lastResult: null,
     }))
+    setShareMessage(null)
   }, [])
+
+  const handleShare = useCallback(async () => {
+    if (state.totalCount === 0) return
+
+    const url = window.location.origin || "https://onqai.reload.co.jp"
+    const text = createShareText(state)
+    const shareUrl = new URL("https://twitter.com/intent/tweet")
+    shareUrl.searchParams.set("text", text)
+    shareUrl.searchParams.set("url", url)
+    shareUrl.searchParams.set("hashtags", "音当てゲーム,音感トレーニング")
+
+    try {
+      const opened = window.open(shareUrl.toString(), "_blank", "noopener,noreferrer")
+
+      if (opened) {
+        setShareMessage("Xの投稿画面を開きました")
+        return
+      }
+
+      await navigator.clipboard.writeText(`${text}\n${url}`)
+      setShareMessage("投稿文をコピーしました")
+    } catch {
+      setShareMessage("シェアできませんでした")
+    }
+  }, [state])
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -185,6 +238,26 @@ export const GamePanel: FC = () => {
         totalCount={state.totalCount}
         streak={state.streak}
       />
+
+      <div style={{ display: "flex", alignItems: "center", gap: ".75rem", flexWrap: "wrap" }}>
+        <button
+          onClick={handleShare}
+          disabled={state.totalCount === 0}
+          style={{
+            padding: ".75rem 1.25rem",
+            borderRadius: ".5rem",
+            border: "1px solid #7c6bf0",
+            backgroundColor: state.totalCount === 0 ? "#2a2a2a" : "#2d2460",
+            color: state.totalCount === 0 ? "#666" : "#f0f0f0",
+            cursor: state.totalCount === 0 ? "not-allowed" : "pointer",
+            fontSize: ".9375rem",
+            fontWeight: "bold",
+          }}
+        >
+          Xでシェア
+        </button>
+        {shareMessage && <p style={{ color: "#aaa", fontSize: ".875rem" }}>{shareMessage}</p>}
+      </div>
 
       <p style={{ fontSize: ".75rem", color: "#555", textAlign: "center" }}>
         スペースキーで再生 / 音名キー（C〜B）で回答
