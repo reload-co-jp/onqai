@@ -3,6 +3,7 @@ import { FC, useState, useCallback, useEffect } from "react"
 import type { GameState, OscillatorWaveType, Difficulty } from "types/game"
 import { playTone } from "lib/audio"
 import { getRandomNote, judgeAnswer, getNotesByDifficulty } from "lib/game"
+import { NOTES_HARD } from "lib/notes"
 import { WaveTypeSelector } from "components/game/WaveTypeSelector"
 import { DifficultySelector } from "components/game/DifficultySelector"
 import { PianoKeyboard } from "components/game/PianoKeyboard"
@@ -49,6 +50,7 @@ export const GamePanel: FC = () => {
   const [state, setState] = useState<GameState>(initialState)
   const [isPlaying, setIsPlaying] = useState(false)
   const [shareMessage, setShareMessage] = useState<string | null>(null)
+  const [previewNoteId, setPreviewNoteId] = useState<string | null>(null)
 
   const currentNotes = getNotesByDifficulty(state.difficulty)
 
@@ -76,6 +78,17 @@ export const GamePanel: FC = () => {
     if (!state.currentNote || isPlaying) return
     playNote(state.currentNote.frequency, state.selectedWaveType)
   }, [state.currentNote, state.selectedWaveType, isPlaying, playNote])
+
+  const handlePreviewNote = useCallback(
+    (noteId: string) => {
+      const note = NOTES_HARD.find((n) => n.id === noteId)
+      if (!note || isPlaying) return
+
+      setPreviewNoteId(note.id)
+      playNote(note.frequency, state.selectedWaveType)
+    },
+    [isPlaying, playNote, state.selectedWaveType]
+  )
 
   const handleAnswer = useCallback(
     (noteId: string) => {
@@ -167,6 +180,35 @@ export const GamePanel: FC = () => {
       </div>
 
       <WaveVisualizer isPlaying={isPlaying} />
+
+      <section
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: ".75rem",
+          padding: "1rem",
+          backgroundColor: "#1e1e2e",
+          border: "1px solid #333",
+          borderRadius: ".5rem",
+        }}
+      >
+        <div>
+          <h2 style={{ color: "#f0f0f0", fontSize: "1rem", fontWeight: "bold", marginBottom: ".25rem" }}>
+            音を確認する
+          </h2>
+          <p style={{ color: "#888", fontSize: ".8125rem", lineHeight: 1.6 }}>
+            鍵盤を押すと、その音だけを再生できます。問題とは別に音の高さを確認できます。
+          </p>
+        </div>
+        <PianoKeyboard
+          notes={NOTES_HARD}
+          onAnswer={handlePreviewNote}
+          disabled={isPlaying}
+          lastAnswer={previewNoteId}
+          lastResult={previewNoteId ? "correct" : null}
+          currentNote={null}
+        />
+      </section>
 
       <div style={{ display: "flex", gap: ".75rem", flexWrap: "wrap", alignItems: "center" }}>
         <button

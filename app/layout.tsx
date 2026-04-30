@@ -1,6 +1,7 @@
 import { Logo } from "components/elements/Logo"
 import { Nav } from "components/elements/Nav"
 import type { Metadata, Viewport } from "next"
+import Script from "next/script"
 import "./reset.css"
 
 const siteUrl = "https://onqai.reload.co.jp"
@@ -77,10 +78,29 @@ const websiteJsonLd = {
   description,
 }
 
+const googleAnalyticsId = "G-C51YH3Y85F"
+const isProduction = process.env.NODE_ENV === "production"
+
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="ja">
       <body>
+        {isProduction && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`}
+              strategy="afterInteractive"
+            />
+            <Script id="google-analytics" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${googleAnalyticsId}');
+              `}
+            </Script>
+          </>
+        )}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
