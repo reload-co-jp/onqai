@@ -6,6 +6,7 @@ import { FC } from "react"
 const LINKS = [
   { href: "/", label: "ゲーム" },
   { href: "/sound", label: "音確認" },
+  { href: "/pitch", label: "音程" },
   { href: "/lesson", label: "講座" },
   { href: "/about", label: "このアプリについて" },
 ]
@@ -19,6 +20,8 @@ export const Nav: FC = () => {
         style={{
           listStyle: "none",
           display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "flex-end",
           gap: ".25rem",
           padding: 0,
           margin: 0,
