@@ -5,6 +5,7 @@ import { FC } from "react"
 
 const LINKS = [
   { href: "/", label: "ゲーム" },
+  { href: "/melody", label: "メロディ" },
   { href: "/sound", label: "音確認" },
   { href: "/pitch", label: "音程" },
   { href: "/lesson", label: "講座" },
