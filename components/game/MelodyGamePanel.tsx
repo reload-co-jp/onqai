@@ -1,5 +1,6 @@
 "use client"
 import { FC, useCallback, useMemo, useRef, useState } from "react"
+import type { OscillatorWaveType } from "types/game"
 import { playTone } from "lib/audio"
 import {
   MELODIES,
@@ -7,6 +8,7 @@ import {
   melodyAnswer,
   type Melody,
 } from "lib/melodies"
+import { WaveTypeSelector } from "components/game/WaveTypeSelector"
 
 type Result = "correct" | "wrong" | null
 
@@ -18,6 +20,7 @@ type MelodyGameState = {
   streak: number
   selectedId: string | null
   result: Result
+  selectedWaveType: OscillatorWaveType
 }
 
 const initialState: MelodyGameState = {
@@ -28,6 +31,7 @@ const initialState: MelodyGameState = {
   streak: 0,
   selectedId: null,
   result: null,
+  selectedWaveType: "piano",
 }
 
 function shuffle<T>(items: T[]): T[] {
@@ -80,7 +84,7 @@ export const MelodyGamePanel: FC = () => {
         const timer = window.setTimeout(() => {
           playTone({
             frequency: MELODY_NOTE_FREQUENCIES[note],
-            type: "sine",
+            type: state.selectedWaveType,
             duration: Math.max(0.18, noteMs / 1000 - 0.04),
             volume: 0.28,
           })
@@ -95,7 +99,7 @@ export const MelodyGamePanel: FC = () => {
       }, elapsedMs + 120)
       timers.current.push(doneTimer)
     },
-    [clearTimers]
+    [clearTimers, state.selectedWaveType]
   )
 
   const handleStart = useCallback(() => {
@@ -131,6 +135,10 @@ export const MelodyGamePanel: FC = () => {
     setIsPlaying(false)
     setState(initialState)
   }, [clearTimers])
+
+  const handleWaveChange = useCallback((type: OscillatorWaveType) => {
+    setState((prev) => ({ ...prev, selectedWaveType: type }))
+  }, [])
 
   const accuracy = useMemo(() => {
     if (state.totalCount === 0) return 0
@@ -190,6 +198,10 @@ export const MelodyGamePanel: FC = () => {
           <div style={{ color: "#888", fontSize: ".8rem", marginBottom: ".35rem" }}>連続</div>
           <div style={{ color: "#f0f0f0", fontSize: "1.35rem", fontWeight: 700 }}>{state.streak}</div>
         </div>
+      </div>
+
+      <div style={{ display: "flex", gap: ".75rem", flexWrap: "wrap", alignItems: "center" }}>
+        <WaveTypeSelector value={state.selectedWaveType} onChange={handleWaveChange} />
       </div>
 
       <div style={{ display: "flex", gap: ".75rem", flexWrap: "wrap", alignItems: "center" }}>

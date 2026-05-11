@@ -3,6 +3,7 @@ import { FC } from "react"
 import type { OscillatorWaveType } from "types/game"
 
 const WAVE_TYPES: { value: OscillatorWaveType; label: string }[] = [
+  { value: "piano", label: "ピアノ" },
   { value: "sine", label: "サイン波" },
   { value: "square", label: "矩形波" },
   { value: "sawtooth", label: "のこぎり波" },

@@ -1,4 +1,4 @@
-export type OscillatorWaveType = "sine" | "square" | "sawtooth" | "triangle"
+export type OscillatorWaveType = "sine" | "square" | "sawtooth" | "triangle" | "piano"
 
 export type Note = {
   id: string
