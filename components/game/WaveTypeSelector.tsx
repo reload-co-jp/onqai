@@ -4,6 +4,11 @@ import type { OscillatorWaveType } from "types/game"
 
 const WAVE_TYPES: { value: OscillatorWaveType; label: string }[] = [
   { value: "piano", label: "ピアノ" },
+  { value: "organ", label: "オルガン" },
+  { value: "guitar", label: "ギター" },
+  { value: "trumpet", label: "トランペット" },
+  { value: "oboe", label: "オーボエ" },
+  { value: "voice", label: "声色" },
   { value: "sine", label: "サイン波" },
   { value: "square", label: "矩形波" },
   { value: "sawtooth", label: "のこぎり波" },

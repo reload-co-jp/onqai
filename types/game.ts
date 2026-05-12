@@ -1,4 +1,14 @@
-export type OscillatorWaveType = "sine" | "square" | "sawtooth" | "triangle" | "piano"
+export type OscillatorWaveType =
+  | "sine"
+  | "square"
+  | "sawtooth"
+  | "triangle"
+  | "piano"
+  | "organ"
+  | "guitar"
+  | "trumpet"
+  | "oboe"
+  | "voice"
 
 export type Note = {
   id: string

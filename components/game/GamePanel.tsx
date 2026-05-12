@@ -29,6 +29,11 @@ const DIFFICULTY_LABELS: Record<Difficulty, string> = {
 
 const WAVE_TYPE_LABELS: Record<OscillatorWaveType, string> = {
   piano: "ピアノ",
+  organ: "オルガン",
+  guitar: "ギター",
+  trumpet: "トランペット",
+  oboe: "オーボエ",
+  voice: "声色",
   sine: "サイン波",
   square: "矩形波",
   sawtooth: "のこぎり波",
