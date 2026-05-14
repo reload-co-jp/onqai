@@ -114,6 +114,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
             alignItems: "center",
             justifyContent: "space-between",
             gap: "1rem",
+            flexWrap: "wrap",
           }}
         >
           <Logo />
