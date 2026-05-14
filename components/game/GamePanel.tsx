@@ -40,6 +40,8 @@ const WAVE_TYPE_LABELS: Record<OscillatorWaveType, string> = {
   triangle: "三角波",
 }
 
+const GAME_LIMIT = 10
+
 const createShareText = (state: GameState) => {
   const accuracy = Math.round((state.correctCount / state.totalCount) * 100)
 
@@ -57,6 +59,8 @@ export const GamePanel: FC = () => {
   const [shareMessage, setShareMessage] = useState<string | null>(null)
 
   const currentNotes = getNotesByDifficulty(state.difficulty)
+  const isGameComplete = state.totalCount >= GAME_LIMIT
+  const accuracy = state.totalCount > 0 ? Math.round((state.correctCount / state.totalCount) * 100) : 0
 
   const playNote = useCallback(
     (frequency: number, waveType: OscillatorWaveType) => {
@@ -68,6 +72,7 @@ export const GamePanel: FC = () => {
   )
 
   const handlePlay = useCallback(() => {
+    if (state.totalCount >= GAME_LIMIT) return
     const note = getRandomNote(currentNotes)
     setState((prev) => ({
       ...prev,
@@ -76,7 +81,7 @@ export const GamePanel: FC = () => {
       lastResult: null,
     }))
     playNote(note.frequency, state.selectedWaveType)
-  }, [currentNotes, state.selectedWaveType, playNote])
+  }, [currentNotes, state.selectedWaveType, state.totalCount, playNote])
 
   const handleReplay = useCallback(() => {
     if (!state.currentNote || isPlaying) return
@@ -85,7 +90,7 @@ export const GamePanel: FC = () => {
 
   const handleAnswer = useCallback(
     (noteId: string) => {
-      if (!state.currentNote || state.lastResult !== null) return
+      if (!state.currentNote || state.lastResult !== null || state.totalCount >= GAME_LIMIT) return
       const correct = judgeAnswer(noteId, state.currentNote)
       setState((prev) => ({
         ...prev,
@@ -96,7 +101,7 @@ export const GamePanel: FC = () => {
         streak: correct ? prev.streak + 1 : 0,
       }))
     },
-    [state.currentNote, state.lastResult]
+    [state.currentNote, state.lastResult, state.totalCount]
   )
 
   const handleReset = useCallback(() => {
@@ -148,7 +153,7 @@ export const GamePanel: FC = () => {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.target instanceof HTMLInputElement || e.target instanceof HTMLButtonElement) return
-      if (e.code === "Space") {
+      if (e.code === "Space" && !isGameComplete) {
         e.preventDefault()
         handlePlay()
         return
@@ -161,9 +166,9 @@ export const GamePanel: FC = () => {
     }
     window.addEventListener("keydown", handleKeyDown)
     return () => window.removeEventListener("keydown", handleKeyDown)
-  }, [handlePlay, handleAnswer, state.currentNote, state.lastResult, currentNotes])
+  }, [handlePlay, handleAnswer, state.currentNote, state.lastResult, currentNotes, isGameComplete])
 
-  const canAnswer = state.currentNote !== null && state.lastResult === null
+  const canAnswer = state.currentNote !== null && state.lastResult === null && !isGameComplete
 
   return (
     <div style={{ maxWidth: "600px", margin: "0 auto", padding: "0 1rem 2rem", display: "flex", flexDirection: "column", gap: "1.5rem" }}>
@@ -177,19 +182,19 @@ export const GamePanel: FC = () => {
       <div style={{ display: "flex", gap: ".75rem", flexWrap: "wrap", alignItems: "center" }}>
         <button
           onClick={handlePlay}
-          disabled={isPlaying}
+          disabled={isPlaying || isGameComplete}
           style={{
             padding: ".75rem 2rem",
             borderRadius: ".5rem",
             border: "none",
-            backgroundColor: isPlaying ? "#4a4080" : "#7c6bf0",
+            backgroundColor: isPlaying || isGameComplete ? "#4a4080" : "#7c6bf0",
             color: "#fff",
-            cursor: isPlaying ? "not-allowed" : "pointer",
+            cursor: isPlaying || isGameComplete ? "not-allowed" : "pointer",
             fontSize: "1rem",
             fontWeight: "bold",
           }}
         >
-          {state.currentNote ? "次の問題" : "再生"}
+          {isGameComplete ? "結果表示中" : state.currentNote ? "次の問題" : "再生"}
         </button>
         {state.currentNote && (
           <button
@@ -245,17 +250,39 @@ export const GamePanel: FC = () => {
         streak={state.streak}
       />
 
+      {isGameComplete && (
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: ".75rem",
+            padding: "1rem",
+            backgroundColor: "#1e1e2e",
+            border: "1px solid #7c6bf0",
+            borderRadius: ".5rem",
+          }}
+        >
+          <p style={{ color: "#aaa", fontSize: ".875rem" }}>10問終了</p>
+          <p style={{ fontSize: "1.5rem", fontWeight: "bold" }}>
+            {state.correctCount} / {GAME_LIMIT}問正解（正答率{accuracy}%）
+          </p>
+          <p style={{ color: "#d8d3ff", fontSize: ".9375rem" }}>
+            結果をXでシェアして、次の練習目標にしよう。
+          </p>
+        </div>
+      )}
+
       <div style={{ display: "flex", alignItems: "center", gap: ".75rem", flexWrap: "wrap" }}>
         <button
           onClick={handleShare}
-          disabled={state.totalCount === 0}
+          disabled={!isGameComplete}
           style={{
             padding: ".75rem 1.25rem",
             borderRadius: ".5rem",
             border: "1px solid #7c6bf0",
-            backgroundColor: state.totalCount === 0 ? "#2a2a2a" : "#2d2460",
-            color: state.totalCount === 0 ? "#666" : "#f0f0f0",
-            cursor: state.totalCount === 0 ? "not-allowed" : "pointer",
+            backgroundColor: isGameComplete ? "#2d2460" : "#2a2a2a",
+            color: isGameComplete ? "#f0f0f0" : "#666",
+            cursor: isGameComplete ? "pointer" : "not-allowed",
             fontSize: ".9375rem",
             fontWeight: "bold",
           }}
