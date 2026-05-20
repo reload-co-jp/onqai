@@ -13,6 +13,7 @@ const ogImage = "/opengraph-image"
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   applicationName: title,
+  manifest: "/manifest.json",
   title: {
     default: `${title} | 無料の音感トレーニング`,
     template: `%s | ${title}`,
@@ -105,6 +106,9 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
+        <Script id="register-sw" strategy="afterInteractive">
+          {`if ('serviceWorker' in navigator) { navigator.serviceWorker.register('/sw.js') }`}
+        </Script>
         <header
           style={{
             backgroundColor: "#333",
