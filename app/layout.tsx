@@ -1,5 +1,6 @@
 import { Logo } from "components/elements/Logo"
 import { Nav } from "components/elements/Nav"
+import { PwaInstallButton } from "components/elements/PwaInstallButton"
 import type { Metadata, Viewport } from "next"
 import Script from "next/script"
 import "./reset.css"
@@ -141,6 +142,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
           }}
         >
           <p>&copy; Onqai</p>
+          <PwaInstallButton />
         </footer>
       </body>
     </html>
