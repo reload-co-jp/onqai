@@ -7,7 +7,7 @@ import { fixupConfigRules } from "@eslint/compat"
 
 export default [
   { files: ["**/*.{js,mjs,cjs,ts,jsx,tsx}"] },
-  { ignores: [".next", "out", "next-env.d.ts", "next.config.js"] },
+  { ignores: [".next", "out", "next-env.d.ts", "next.config.js", "public/sw.js"] },
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
   ...fixupConfigRules(pluginReact.configs.flat.recommended),

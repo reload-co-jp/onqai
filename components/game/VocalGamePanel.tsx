@@ -51,8 +51,10 @@ export const VocalGamePanel: FC = () => {
   const phaseRef = useRef<Phase>("idle")
   const targetNoteRef = useRef<Note | null>(null)
 
-  phaseRef.current = phase
-  targetNoteRef.current = targetNote
+  useEffect(() => {
+    phaseRef.current = phase
+    targetNoteRef.current = targetNote
+  })
 
   const stopMic = useCallback(() => {
     if (rafRef.current) cancelAnimationFrame(rafRef.current)
