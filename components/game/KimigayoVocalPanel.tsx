@@ -108,6 +108,49 @@ const KIMIGAYO_DURATIONS = [
   2,
 ]
 
+const KIMIGAYO_LYRICS = [
+  "き",
+  "み",
+  "が",
+  "よ",
+  "は",
+  "ー",
+  "ー",
+  "ち",
+  "よ",
+  "に",
+  "や",
+  "ち",
+  "よ",
+  "に",
+  "さ",
+  "ざ",
+  "れ",
+  "い",
+  "し",
+  "ー",
+  "の",
+  "ー",
+  "い",
+  "わ",
+  "お",
+  "と",
+  "な",
+  "り",
+  "て",
+  "こ",
+  "け",
+  "の",
+  "む",
+  "す",
+  "ま",
+  "で",
+  "ー",
+  "ー",
+  "ー",
+  "ー",
+]
+
 const KIMIGAYO_NOTES = KIMIGAYO_NOTE_IDS.map((id) => NOTE_BANK[id])
 
 const meterColor = (cents: number) => {
@@ -138,8 +181,12 @@ export const KimigayoVocalPanel: FC = () => {
   const timersRef = useRef<number[]>([])
 
   const currentNote = KIMIGAYO_NOTES[currentIndex]
+  const currentLyric = KIMIGAYO_LYRICS[currentIndex]
   const completeCount = results.filter((result) => result.success).length
-  const noteLine = useMemo(() => KIMIGAYO_NOTES.map((note) => note.solfege).join(" "), [])
+  const noteLine = useMemo(
+    () => KIMIGAYO_NOTES.map((note, index) => `${note.solfege}(${KIMIGAYO_LYRICS[index]})`).join(" "),
+    []
+  )
 
   useEffect(() => {
     phaseRef.current = phase
@@ -375,6 +422,9 @@ export const KimigayoVocalPanel: FC = () => {
             {currentNote.label}
           </p>
           <p style={{ color: "#aaa", fontSize: "1.25rem", marginTop: ".25rem" }}>{currentNote.solfege}</p>
+          <p style={{ color: "#f0f0f0", fontSize: "1.35rem", fontWeight: 700, marginTop: ".35rem" }}>
+            歌詞: {currentLyric}
+          </p>
           <p style={{ color: "#666", fontSize: ".875rem", marginTop: ".25rem" }}>{currentNote.frequency}Hz</p>
           <button
             onClick={handlePlayReferenceNote}
@@ -502,13 +552,13 @@ export const KimigayoVocalPanel: FC = () => {
 
       {phase === "success" && (
         <p style={{ color: "#4ade80", fontWeight: 700, textAlign: "center" }}>
-          成功: {currentNote.label}({currentNote.solfege})
+          成功: {currentNote.label}({currentNote.solfege}) / {currentLyric}
         </p>
       )}
 
       {phase === "miss" && (
         <p style={{ color: "#f87171", fontWeight: 700, textAlign: "center" }}>
-          スキップ: {currentNote.label}({currentNote.solfege})
+          スキップ: {currentNote.label}({currentNote.solfege}) / {currentLyric}
         </p>
       )}
 
@@ -576,18 +626,21 @@ export const KimigayoVocalPanel: FC = () => {
               key={`${note.id}-${index}`}
               style={{
                 minWidth: "1.55rem",
-                height: "1.55rem",
+                minHeight: "2.35rem",
                 borderRadius: ".375rem",
                 display: "inline-flex",
+                flexDirection: "column",
                 alignItems: "center",
                 justifyContent: "center",
-                fontSize: ".75rem",
+                gap: ".05rem",
+                fontSize: ".7rem",
                 fontWeight: 700,
                 color: result ? "#111" : active ? "#fff" : "#777",
                 backgroundColor: result ? (result.success ? "#4ade80" : "#f87171") : active ? "#7c6bf0" : "#202020",
               }}
             >
-              {note.solfege}
+              <span>{note.solfege}</span>
+              <span style={{ fontSize: ".65rem", fontWeight: 600 }}>{KIMIGAYO_LYRICS[index]}</span>
             </span>
           )
         })}
