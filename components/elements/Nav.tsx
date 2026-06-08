@@ -7,6 +7,7 @@ const LINKS = [
   { href: "/", label: "ゲーム" },
   { href: "/melody", label: "メロディ" },
   { href: "/vocal", label: "発声" },
+  { href: "/kimigayo", label: "君が代" },
   { href: "/sound", label: "音確認" },
   { href: "/pitch", label: "音程" },
   { href: "/lesson", label: "講座" },
