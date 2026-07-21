@@ -10,6 +10,7 @@ const LINKS = [
   { href: "/kimigayo", label: "君が代" },
   { href: "/sound", label: "音確認" },
   { href: "/pitch", label: "音程" },
+  { href: "/chord", label: "コード進行" },
   { href: "/lesson", label: "講座" },
   { href: "/about", label: "このアプリについて" },
 ]
