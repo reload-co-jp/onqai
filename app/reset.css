@@ -9,3 +9,14 @@
   color: #f0f0f0;
   color-scheme: dark;
 }
+
+:root {
+  --accent: #7c6bf0;
+  --accent-dark: #2d2460;
+  --text: #f0f0f0;
+  --text-muted: #aaa;
+  --surface: #1e1e2e;
+  --surface-2: #2a2a2a;
+  --success: #4ade80;
+  --error: #f87171;
+}

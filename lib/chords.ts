@@ -1,7 +1,6 @@
 export type ChordQuality = "major" | "minor" | "diminished"
 
 export type Chord = {
-  id: string
   label: string
   root: number // C4からの半音数
   quality: ChordQuality
@@ -29,20 +28,19 @@ export function chordFrequencies(chord: Chord): number[] {
   )
 }
 
-const chord = (id: string, label: string, root: number, quality: ChordQuality): Chord => ({
-  id,
+const chord = (label: string, root: number, quality: ChordQuality): Chord => ({
   label,
   root,
   quality,
 })
 
 // キーはすべてCメジャーで統一し、進行どうしの響きの差を比べやすくする
-const C = chord("C", "C", 0, "major")
-const Dm = chord("Dm", "Dm", 2, "minor")
-const Em = chord("Em", "Em", 4, "minor")
-const F = chord("F", "F", 5, "major")
-const G = chord("G", "G", 7, "major")
-const Am = chord("Am", "Am", 9, "minor")
+const C = chord("C", 0, "major")
+const Dm = chord("Dm", 2, "minor")
+const Em = chord("Em", 4, "minor")
+const F = chord("F", 5, "major")
+const G = chord("G", 7, "major")
+const Am = chord("Am", 9, "minor")
 
 export const PROGRESSIONS: Progression[] = [
   {

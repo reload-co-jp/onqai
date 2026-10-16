@@ -1,8 +1,8 @@
 "use client"
-import { FC, useCallback, useRef, useState } from "react"
+import { FC, useCallback, useEffect, useRef, useState } from "react"
 import type { OscillatorWaveType } from "types/game"
 import { playTone } from "lib/audio"
-import { chordFrequencies, PROGRESSIONS, type Chord } from "lib/chords"
+import { chordFrequencies, PROGRESSIONS, type Chord, type Progression } from "lib/chords"
 import { WaveTypeSelector } from "components/game/WaveTypeSelector"
 
 const CHORD_DURATION = 0.85
@@ -25,11 +25,16 @@ export const ChordProgressionPanel: FC = () => {
     timeoutsRef.current = []
   }, [])
 
+  // アンマウント時に予約済みの再生を止める
+  useEffect(() => stopScheduled, [stopScheduled])
+
+  const isBusy = playingId !== null
+
   const handlePlay = useCallback(
-    (progressionId: string, chords: Chord[]) => {
+    ({ id, chords }: Progression) => {
       if (playingId) return
       stopScheduled()
-      setPlayingId(progressionId)
+      setPlayingId(id)
 
       chords.forEach((chord, index) => {
         const timeout = setTimeout(() => {
@@ -113,17 +118,17 @@ export const ChordProgressionPanel: FC = () => {
                   </p>
                 </div>
                 <button
-                  onClick={() => handlePlay(progression.id, progression.chords)}
-                  disabled={playingId !== null}
+                  onClick={() => handlePlay(progression)}
+                  disabled={isBusy}
                   style={{
                     padding: ".5rem 1.25rem",
                     borderRadius: ".375rem",
                     border: "none",
-                    backgroundColor: playingId !== null ? "#444" : "#7c6bf0",
+                    backgroundColor: isBusy ? "#444" : "#7c6bf0",
                     color: "#fff",
                     fontWeight: "bold",
                     fontSize: ".875rem",
-                    cursor: playingId !== null ? "default" : "pointer",
+                    cursor: isBusy ? "default" : "pointer",
                   }}
                 >
                   {isPlaying ? "再生中" : "再生する"}
@@ -135,23 +140,26 @@ export const ChordProgressionPanel: FC = () => {
               </p>
 
               <div style={{ display: "flex", gap: ".5rem", flexWrap: "wrap" }}>
-                {progression.chords.map((chord, index) => (
-                  <span
-                    key={`${chord.id}-${index}`}
-                    style={{
-                      padding: ".375rem .75rem",
-                      borderRadius: ".375rem",
-                      fontSize: ".9375rem",
-                      fontWeight: "bold",
-                      color: isPlaying && activeIndex === index ? "#fff" : "#ccc",
-                      backgroundColor: isPlaying && activeIndex === index ? "#7c6bf0" : "#2a2a2a",
-                      border: "1px solid #444",
-                      transition: "background-color .1s, color .1s",
-                    }}
-                  >
-                    {chord.label}
-                  </span>
-                ))}
+                {progression.chords.map((chord, index) => {
+                  const isActive = isPlaying && activeIndex === index
+                  return (
+                    <span
+                      key={index}
+                      style={{
+                        padding: ".375rem .75rem",
+                        borderRadius: ".375rem",
+                        fontSize: ".9375rem",
+                        fontWeight: "bold",
+                        color: isActive ? "#fff" : "#ccc",
+                        backgroundColor: isActive ? "#7c6bf0" : "#2a2a2a",
+                        border: "1px solid #444",
+                        transition: "background-color .1s, color .1s",
+                      }}
+                    >
+                      {chord.label}
+                    </span>
+                  )
+                })}
               </div>
             </section>
           )
