@@ -11,7 +11,11 @@ export const PwaInstallButton = () => {
       setPrompt(e)
     }
     window.addEventListener("beforeinstallprompt", handler as EventListener)
-    return () => window.removeEventListener("beforeinstallprompt", handler as EventListener)
+    return () =>
+      window.removeEventListener(
+        "beforeinstallprompt",
+        handler as EventListener
+      )
   }, [])
 
   if (!prompt) return null

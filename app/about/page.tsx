@@ -51,7 +51,10 @@ const articleJsonLd = {
   },
 }
 
-const Section: FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => (
+const Section: FC<{ title: string; children: React.ReactNode }> = ({
+  title,
+  children,
+}) => (
   <section
     style={{
       padding: "2rem 0",
@@ -85,13 +88,7 @@ const emphasis: React.CSSProperties = {
 }
 
 const Page: FC = () => (
-  <div
-    style={{
-      maxWidth: "680px",
-      margin: "0 auto",
-      padding: "2.5rem 1.25rem 4rem",
-    }}
-  >
+  <div className="page">
     <script
       type="application/ld+json"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
@@ -103,7 +100,7 @@ const Page: FC = () => (
           fontSize: ".8rem",
           letterSpacing: ".14em",
           textTransform: "uppercase",
-          color: "#7c6bf0",
+          color: "var(--accent)",
           fontWeight: "600",
           marginBottom: ".75rem",
         }}
@@ -121,9 +118,18 @@ const Page: FC = () => (
       >
         音痴は、治せる。
       </h1>
-      <p style={{ fontSize: "1rem", color: "#aaa", lineHeight: 1.8, maxWidth: "500px", margin: "0 auto" }}>
-        音痴の多くは生まれつきではなく、<span style={emphasis}>「音を正確に聴く習慣」が育っていないだけ</span>です。
-        耳を鍛えることで、誰でも音程感覚を身につけられます。
+      <p
+        style={{
+          fontSize: "1rem",
+          color: "#aaa",
+          lineHeight: 1.8,
+          maxWidth: "500px",
+          margin: "0 auto",
+        }}
+      >
+        音痴の多くは生まれつきではなく、
+        <span style={emphasis}>「音を正確に聴く習慣」が育っていないだけ</span>
+        です。 耳を鍛えることで、誰でも音程感覚を身につけられます。
       </p>
     </div>
 
@@ -131,8 +137,9 @@ const Page: FC = () => (
     <Section title="音痴の正体">
       <p style={body}>
         音痴とは一般に、「歌うときに音程が外れてしまう状態」を指します。
-        しかし医学的な意味での「音が聞こえない」人はごく少数で、
-        大多数の音痴は<span style={emphasis}>「音の高さの違いを認識する経験が少ない」</span>ことが原因です。
+        しかし医学的な意味での「音が聞こえない」人はごく少数で、 大多数の音痴は
+        <span style={emphasis}>「音の高さの違いを認識する経験が少ない」</span>
+        ことが原因です。
       </p>
       <p style={body}>
         音を認識する力は、使えば使うほど精度が上がります。
@@ -143,7 +150,11 @@ const Page: FC = () => (
 
     <Section title="音階識別が「聴く耳」を育てる">
       <p style={body}>
-        音感トレーニングの第一歩は、<span style={emphasis}>「この音は C だ」「この音は A だ」と識別できるようになること</span>です。
+        音感トレーニングの第一歩は、
+        <span style={emphasis}>
+          「この音は C だ」「この音は A だ」と識別できるようになること
+        </span>
+        です。
         音階を識別する練習を繰り返すと、脳が音の高低をより細かく処理するようになります。
       </p>
       <p style={body}>
@@ -160,10 +171,16 @@ const Page: FC = () => (
         }}
       >
         {[
-          { step: "01", text: "音階を繰り返し聴いて、音の高低を体に覚えさせる" },
+          {
+            step: "01",
+            text: "音階を繰り返し聴いて、音の高低を体に覚えさせる",
+          },
           { step: "02", text: "「何の音か」を当てる練習で識別精度を上げる" },
           { step: "03", text: "正解音と自分の声を比べ、ズレを意識する" },
-          { step: "04", text: "ズレに気づく → 修正する、のループで音程感覚が定着" },
+          {
+            step: "04",
+            text: "ズレに気づく → 修正する、のループで音程感覚が定着",
+          },
         ].map(({ step, text }) => (
           <div
             key={step}
@@ -172,7 +189,7 @@ const Page: FC = () => (
               gap: "1rem",
               alignItems: "flex-start",
               padding: ".875rem 1rem",
-              backgroundColor: "#1e1e2e",
+              backgroundColor: "var(--surface)",
               borderRadius: ".5rem",
               border: "1px solid #2d2460",
             }}
@@ -181,7 +198,7 @@ const Page: FC = () => (
               style={{
                 fontSize: ".75rem",
                 fontWeight: "bold",
-                color: "#7c6bf0",
+                color: "var(--accent)",
                 letterSpacing: ".06em",
                 flexShrink: 0,
                 paddingTop: ".1rem",
@@ -189,7 +206,11 @@ const Page: FC = () => (
             >
               {step}
             </span>
-            <span style={{ fontSize: ".9375rem", color: "#ccc", lineHeight: 1.6 }}>{text}</span>
+            <span
+              style={{ fontSize: ".9375rem", color: "#ccc", lineHeight: 1.6 }}
+            >
+              {text}
+            </span>
           </div>
         ))}
       </div>
@@ -204,13 +225,15 @@ const Page: FC = () => (
       <p style={body}>
         このアプリでは、サイン波・矩形波・のこぎり波・三角波の4種類の音色で練習できます。
         音色が変わっても同じ音階を正確に識別する経験を積むことで、
-        実際の楽器や歌声に対しても応用できる<span style={emphasis}>汎用的な音感</span>が育ちます。
+        実際の楽器や歌声に対しても応用できる
+        <span style={emphasis}>汎用的な音感</span>が育ちます。
       </p>
     </Section>
 
     <Section title="このアプリでの練習方法">
       <p style={body}>
-        まずは<span style={emphasis}>初級（C D E F G の5音）</span>からはじめましょう。
+        まずは<span style={emphasis}>初級（C D E F G の5音）</span>
+        からはじめましょう。
         音の数が少ない分、それぞれの音の特徴を覚えやすくなっています。
       </p>
       <p style={body}>
@@ -229,7 +252,7 @@ const Page: FC = () => (
         marginTop: "2.5rem",
         textAlign: "center",
         padding: "2rem 1rem",
-        backgroundColor: "#1e1e2e",
+        backgroundColor: "var(--surface)",
         borderRadius: "1rem",
         border: "1px solid #2d2460",
       }}
@@ -253,7 +276,7 @@ const Page: FC = () => (
           display: "inline-block",
           padding: ".75rem 2.5rem",
           borderRadius: ".5rem",
-          backgroundColor: "#7c6bf0",
+          backgroundColor: "var(--accent)",
           color: "#fff",
           textDecoration: "none",
           fontWeight: "bold",

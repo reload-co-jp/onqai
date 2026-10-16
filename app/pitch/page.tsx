@@ -79,7 +79,10 @@ const strong: React.CSSProperties = {
   fontWeight: "700",
 }
 
-const Section: FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => (
+const Section: FC<{ title: string; children: React.ReactNode }> = ({
+  title,
+  children,
+}) => (
   <section style={{ padding: "2rem 0", borderBottom: "1px solid #2a2a2a" }}>
     <h2
       style={{
@@ -96,13 +99,7 @@ const Section: FC<{ title: string; children: React.ReactNode }> = ({ title, chil
 )
 
 const Page: FC = () => (
-  <div
-    style={{
-      maxWidth: "780px",
-      margin: "0 auto",
-      padding: "2.5rem 1.25rem 4rem",
-    }}
-  >
+  <div className="page">
     <script
       type="application/ld+json"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
@@ -114,7 +111,7 @@ const Page: FC = () => (
           fontSize: ".8rem",
           letterSpacing: ".14em",
           textTransform: "uppercase",
-          color: "#7c6bf0",
+          color: "var(--accent)",
           fontWeight: "600",
           marginBottom: ".75rem",
         }}
@@ -132,8 +129,11 @@ const Page: FC = () => (
       >
         音程・ABC・ドレミ・周波数の基礎
       </h1>
-      <p style={{ ...body, maxWidth: "600px", margin: "0 auto", color: "#aaa" }}>
-        音の高さは、音名だけでなく<span style={strong}>周波数</span>でも表せます。
+      <p
+        style={{ ...body, maxWidth: "600px", margin: "0 auto", color: "#aaa" }}
+      >
+        音の高さは、音名だけでなく<span style={strong}>周波数</span>
+        でも表せます。
         ABCとドレミの対応を覚えると、音当ての答え方が整理しやすくなります。
       </p>
     </div>
@@ -141,7 +141,9 @@ const Page: FC = () => (
     <Section title="音程は、音と音の高さの差">
       <p style={body}>
         音程は、2つの音の高さの距離です。CからDは近く、CからGは少し離れています。
-        音当てでは、まず<span style={strong}>今聴いた音が基準音より高いか低いか</span>を感じることが大切です。
+        音当てでは、まず
+        <span style={strong}>今聴いた音が基準音より高いか低いか</span>
+        を感じることが大切です。
       </p>
       <p style={body}>
         音そのものの高さは「ピッチ」と呼ばれ、物理的には周波数で表せます。
@@ -152,7 +154,8 @@ const Page: FC = () => (
     <Section title="ABCとドレミの対応">
       <p style={body}>
         音楽では、ドレミとABCの2種類の呼び方がよく使われます。
-        このゲームでは、画面上の回答に<span style={strong}>C D E F G A B</span>を使っています。
+        このゲームでは、画面上の回答に<span style={strong}>C D E F G A B</span>
+        を使っています。
       </p>
       <div
         style={{
@@ -175,14 +178,30 @@ const Page: FC = () => (
             key={abc}
             style={{
               padding: "1rem",
-              backgroundColor: "#1e1e2e",
+              backgroundColor: "var(--surface)",
               border: "1px solid #2d2460",
               borderRadius: ".5rem",
               textAlign: "center",
             }}
           >
-            <div style={{ color: "#f0f0f0", fontSize: "1.35rem", fontWeight: "bold" }}>{abc}</div>
-            <div style={{ color: "#aaa", fontSize: ".9375rem", marginTop: ".25rem" }}>{solfege}</div>
+            <div
+              style={{
+                color: "#f0f0f0",
+                fontSize: "1.35rem",
+                fontWeight: "bold",
+              }}
+            >
+              {abc}
+            </div>
+            <div
+              style={{
+                color: "#aaa",
+                fontSize: ".9375rem",
+                marginTop: ".25rem",
+              }}
+            >
+              {solfege}
+            </div>
           </div>
         ))}
       </div>
@@ -191,7 +210,8 @@ const Page: FC = () => (
     <Section title="周波数は、1秒あたりの振動数">
       <p style={body}>
         周波数の単位はHzです。440Hzは、1秒間に440回振動する音という意味です。
-        一般的なチューニングでは<span style={strong}>A4（ラ）= 440Hz</span>が基準として使われます。
+        一般的なチューニングでは<span style={strong}>A4（ラ）= 440Hz</span>
+        が基準として使われます。
       </p>
       <p style={body}>
         1オクターブ上がると周波数は2倍、1オクターブ下がると半分になります。
@@ -219,7 +239,7 @@ const Page: FC = () => (
                     padding: ".75rem",
                     color: "#f0f0f0",
                     borderBottom: "1px solid #444",
-                    backgroundColor: "#1e1e2e",
+                    backgroundColor: "var(--surface)",
                   }}
                 >
                   {heading}
@@ -230,10 +250,39 @@ const Page: FC = () => (
           <tbody>
             {noteRows.map(([abc, solfege, frequency, hint]) => (
               <tr key={abc}>
-                <td style={{ padding: ".75rem", borderBottom: "1px solid #2a2a2a", fontWeight: "700" }}>{abc}</td>
-                <td style={{ padding: ".75rem", borderBottom: "1px solid #2a2a2a" }}>{solfege}</td>
-                <td style={{ padding: ".75rem", borderBottom: "1px solid #2a2a2a" }}>{frequency}</td>
-                <td style={{ padding: ".75rem", borderBottom: "1px solid #2a2a2a" }}>{hint}</td>
+                <td
+                  style={{
+                    padding: ".75rem",
+                    borderBottom: "1px solid #2a2a2a",
+                    fontWeight: "700",
+                  }}
+                >
+                  {abc}
+                </td>
+                <td
+                  style={{
+                    padding: ".75rem",
+                    borderBottom: "1px solid #2a2a2a",
+                  }}
+                >
+                  {solfege}
+                </td>
+                <td
+                  style={{
+                    padding: ".75rem",
+                    borderBottom: "1px solid #2a2a2a",
+                  }}
+                >
+                  {frequency}
+                </td>
+                <td
+                  style={{
+                    padding: ".75rem",
+                    borderBottom: "1px solid #2a2a2a",
+                  }}
+                >
+                  {hint}
+                </td>
               </tr>
             ))}
           </tbody>
@@ -257,12 +306,19 @@ const Page: FC = () => (
         marginTop: "2.5rem",
         textAlign: "center",
         padding: "2rem 1rem",
-        backgroundColor: "#1e1e2e",
+        backgroundColor: "var(--surface)",
         borderRadius: ".5rem",
         border: "1px solid #2d2460",
       }}
     >
-      <p style={{ color: "#f0f0f0", fontSize: "1.125rem", fontWeight: "bold", marginBottom: ".5rem" }}>
+      <p
+        style={{
+          color: "#f0f0f0",
+          fontSize: "1.125rem",
+          fontWeight: "bold",
+          marginBottom: ".5rem",
+        }}
+      >
         音を聴いて対応を覚える
       </p>
       <p style={{ color: "#888", fontSize: ".875rem", marginBottom: "1.5rem" }}>
@@ -274,7 +330,7 @@ const Page: FC = () => (
           display: "inline-block",
           padding: ".75rem 2.5rem",
           borderRadius: ".5rem",
-          backgroundColor: "#7c6bf0",
+          backgroundColor: "var(--accent)",
           color: "#fff",
           textDecoration: "none",
           fontWeight: "bold",

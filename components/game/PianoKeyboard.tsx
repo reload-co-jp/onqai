@@ -59,7 +59,11 @@ export const PianoKeyboard: FC<Props> = ({
       return { bg: "#1a4731", border: "#22c55e", color: "#22c55e" }
     }
     if (!available) {
-      return { bg: isWhite ? "#4a4a4a" : "#2a2a2a", border: "#3a3a3a", color: "#555" }
+      return {
+        bg: isWhite ? "#4a4a4a" : "#2a2a2a",
+        border: "#3a3a3a",
+        color: "#555",
+      }
     }
     return {
       bg: isWhite ? "#e8e8e8" : "#222",
@@ -70,7 +74,14 @@ export const PianoKeyboard: FC<Props> = ({
 
   return (
     <div style={{ overflowX: "auto", paddingBottom: ".5rem" }}>
-      <div style={{ position: "relative", width: WHITE_KEYS.length * W, height: H, flexShrink: 0 }}>
+      <div
+        style={{
+          position: "relative",
+          width: WHITE_KEYS.length * W,
+          height: H,
+          flexShrink: 0,
+        }}
+      >
         {WHITE_KEYS.map((key, i) => {
           const { bg, border, color } = resolveColors(key.id, true)
           const available = noteIds.has(key.id)
@@ -102,7 +113,9 @@ export const PianoKeyboard: FC<Props> = ({
               }}
             >
               <span>{key.label}</span>
-              <span style={{ fontSize: ".625rem", fontWeight: "normal" }}>{key.solfege}</span>
+              <span style={{ fontSize: ".625rem", fontWeight: "normal" }}>
+                {key.solfege}
+              </span>
             </button>
           )
         })}

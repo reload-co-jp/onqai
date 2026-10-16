@@ -51,9 +51,9 @@ export const WaveVisualizer: FC<Props> = ({ isPlaying }) => {
       }
 
       ctx.lineWidth = 2
-      ctx.strokeStyle = "#7c6bf0"
+      ctx.strokeStyle = "#8b7bff"
       ctx.shadowBlur = 12
-      ctx.shadowColor = "#7c6bf0"
+      ctx.shadowColor = "#8b7bff"
       ctx.beginPath()
 
       const sliceWidth = W / bufferLength
@@ -87,9 +87,9 @@ export const WaveVisualizer: FC<Props> = ({ isPlaying }) => {
       aria-label="音波ビジュアライザー"
       style={{
         width: "100%",
-        height: "80px",
+        height: "5rem",
         borderRadius: ".5rem",
-        border: `1px solid ${isPlaying ? "#7c6bf0" : "#333"}`,
+        border: `1px solid ${isPlaying ? "var(--accent)" : "#333"}`,
         display: "block",
         transition: "border-color 0.3s",
       }}
@@ -106,7 +106,7 @@ function drawFlatLine(
 ) {
   ctx.globalAlpha = opacity
   ctx.lineWidth = 1
-  ctx.strokeStyle = "#7c6bf0"
+  ctx.strokeStyle = "#8b7bff"
   ctx.setLineDash([4, 8])
   ctx.beginPath()
   ctx.moveTo(0, centerY)

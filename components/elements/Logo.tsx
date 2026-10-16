@@ -10,18 +10,39 @@ export const Logo: FC = () => (
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
     >
-      <rect x="0" y="5" width="4" height="10" rx="2" fill="#7c6bf0" />
-      <rect x="6" y="0" width="4" height="20" rx="2" fill="#7c6bf0" />
-      <rect x="12" y="7" width="4" height="8" rx="2" fill="#a89af5" />
-      <rect x="18" y="2" width="4" height="16" rx="2" fill="#7c6bf0" />
-      <rect x="24" y="5" width="4" height="11" rx="2" fill="#7c6bf0" />
+      <defs>
+        <linearGradient
+          id="logo-grad"
+          x1="0"
+          y1="0"
+          x2="28"
+          y2="20"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#8b7bff" />
+          <stop offset="1" stopColor="#ff7ac6" />
+        </linearGradient>
+      </defs>
+      <rect x="0" y="5" width="4" height="10" rx="2" fill="url(#logo-grad)" />
+      <rect x="6" y="0" width="4" height="20" rx="2" fill="url(#logo-grad)" />
+      <rect
+        x="12"
+        y="7"
+        width="4"
+        height="8"
+        rx="2"
+        fill="url(#logo-grad)"
+        opacity=".6"
+      />
+      <rect x="18" y="2" width="4" height="16" rx="2" fill="url(#logo-grad)" />
+      <rect x="24" y="5" width="4" height="11" rx="2" fill="url(#logo-grad)" />
     </svg>
     <span
+      className="gradient-text"
       style={{
         fontSize: "1rem",
         fontWeight: "bold",
-        color: "#f0f0f0",
-        letterSpacing: ".02em",
+        letterSpacing: ".04em",
       }}
     >
       音当てゲーム

@@ -6,11 +6,10 @@ export const Hero: FC = () => (
   <section
     style={{
       textAlign: "center",
-      padding: "3rem 1rem 2.5rem",
+      padding: "calc(var(--section) * 1.4) var(--gutter) var(--section)",
       background:
         "radial-gradient(ellipse 80% 60% at 50% 0%, rgba(124,107,240,0.18) 0%, transparent 70%)",
-      borderBottom: "1px solid #2a2a2a",
-      marginBottom: "2rem",
+      borderBottom: "1px solid var(--border)",
     }}
   >
     <div
@@ -18,8 +17,8 @@ export const Hero: FC = () => (
         display: "flex",
         justifyContent: "center",
         alignItems: "flex-end",
-        gap: "5px",
-        height: "60px",
+        gap: ".3rem",
+        height: "3.75rem",
         marginBottom: "1.75rem",
       }}
       aria-hidden="true"
@@ -28,10 +27,11 @@ export const Hero: FC = () => (
         <div
           key={i}
           style={{
-            width: "6px",
-            height: `${h}px`,
-            borderRadius: "3px",
-            backgroundColor: i % 3 === 1 ? "#a89af5" : "#7c6bf0",
+            width: ".375rem",
+            height: `${h / 16}rem`,
+            borderRadius: "999px",
+            background:
+              "linear-gradient(to top, var(--accent), var(--accent-2))",
             opacity: 0.7 + (h / 52) * 0.3,
           }}
         />
@@ -39,10 +39,10 @@ export const Hero: FC = () => (
     </div>
 
     <h1
+      className="gradient-text"
       style={{
-        fontSize: "clamp(1.75rem, 5vw, 2.75rem)",
+        fontSize: "clamp(2.25rem, 8vw, 5.5rem)",
         fontWeight: "bold",
-        color: "#f0f0f0",
         margin: "0 0 .5rem",
         letterSpacing: ".04em",
       }}
@@ -53,7 +53,7 @@ export const Hero: FC = () => (
     <p
       style={{
         fontSize: ".875rem",
-        color: "#7c6bf0",
+        color: "var(--accent)",
         letterSpacing: ".12em",
         textTransform: "uppercase",
         margin: "0 0 1.25rem",

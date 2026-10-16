@@ -21,7 +21,8 @@ const DIFFICULTY_NOTES: Record<Difficulty, Note[]> = {
 }
 
 function pickRandomNote(notes: Note[], exclude?: Note): Note {
-  const pool = notes.length > 1 ? notes.filter((n) => n.id !== exclude?.id) : notes
+  const pool =
+    notes.length > 1 ? notes.filter((n) => n.id !== exclude?.id) : notes
   return pool[Math.floor(Math.random() * pool.length)]
 }
 
@@ -69,7 +70,10 @@ export const VocalGamePanel: FC = () => {
   const startMic = useCallback(async () => {
     setMicError(null)
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false })
+      const stream = await navigator.mediaDevices.getUserMedia({
+        audio: true,
+        video: false,
+      })
       const ctx = new AudioContext()
       const analyser = ctx.createAnalyser()
       analyser.fftSize = 4096
@@ -101,7 +105,10 @@ export const VocalGamePanel: FC = () => {
             const progress = Math.min((elapsed / HOLD_DURATION_MS) * 100, 100)
             setHoldProgress(progress)
 
-            if (elapsed >= HOLD_DURATION_MS && phaseRef.current === "listening") {
+            if (
+              elapsed >= HOLD_DURATION_MS &&
+              phaseRef.current === "listening"
+            ) {
               setPhase("success")
               setHoldProgress(100)
               stopMic()
@@ -152,7 +159,9 @@ export const VocalGamePanel: FC = () => {
   const handleNext = useCallback(() => {
     const target = targetNoteRef.current
     const wasSuccess = phaseRef.current === "success"
-    const next = target ? [...results, { note: target, success: wasSuccess }] : results
+    const next = target
+      ? [...results, { note: target, success: wasSuccess }]
+      : results
     setResults(next)
     if (next.length >= GAME_ROUNDS) {
       setPhase("complete")
@@ -189,14 +198,14 @@ export const VocalGamePanel: FC = () => {
   useEffect(() => () => stopMic(), [stopMic])
 
   const correctCount = results.filter((r) => r.success).length
-  const roundIndex = results.length + (phase === "listening" || phase === "success" || phase === "miss" ? 1 : 0)
+  const roundIndex =
+    results.length +
+    (phase === "listening" || phase === "success" || phase === "miss" ? 1 : 0)
 
   return (
     <div
+      className="page"
       style={{
-        maxWidth: "560px",
-        margin: "0 auto",
-        padding: "0 1rem 3rem",
         display: "flex",
         flexDirection: "column",
         gap: "1.5rem",
@@ -215,20 +224,42 @@ export const VocalGamePanel: FC = () => {
         <div
           style={{
             padding: "2rem 1.5rem",
-            backgroundColor: "#1e1e2e",
+            backgroundColor: "var(--surface)",
             border: "1px solid #2d2460",
             borderRadius: ".75rem",
             textAlign: "center",
           }}
         >
-          <p style={{ color: "#7c6bf0", fontSize: ".8rem", letterSpacing: ".12em", marginBottom: ".5rem" }}>
+          <p
+            style={{
+              color: "var(--accent)",
+              fontSize: ".8rem",
+              letterSpacing: ".12em",
+              marginBottom: ".5rem",
+            }}
+          >
             TARGET — 第{roundIndex}問 / {GAME_ROUNDS}問
           </p>
-          <p style={{ fontSize: "4rem", fontWeight: "bold", color: "#f0f0f0", lineHeight: 1 }}>
+          <p
+            style={{
+              fontSize: "4rem",
+              fontWeight: "bold",
+              color: "#f0f0f0",
+              lineHeight: 1,
+            }}
+          >
             {targetNote.label}
           </p>
-          <p style={{ color: "#aaa", fontSize: "1.25rem", marginTop: ".25rem" }}>{targetNote.solfege}</p>
-          <p style={{ color: "#666", fontSize: ".875rem", marginTop: ".25rem" }}>{targetNote.frequency}Hz</p>
+          <p
+            style={{ color: "#aaa", fontSize: "1.25rem", marginTop: ".25rem" }}
+          >
+            {targetNote.solfege}
+          </p>
+          <p
+            style={{ color: "#666", fontSize: ".875rem", marginTop: ".25rem" }}
+          >
+            {targetNote.frequency}Hz
+          </p>
           <button
             onClick={handlePlayReference}
             style={{
@@ -249,7 +280,9 @@ export const VocalGamePanel: FC = () => {
 
       {/* Pitch meter */}
       {phase === "listening" && (
-        <div style={{ display: "flex", flexDirection: "column", gap: ".75rem" }}>
+        <div
+          style={{ display: "flex", flexDirection: "column", gap: ".75rem" }}
+        >
           <div
             style={{
               position: "relative",
@@ -348,7 +381,13 @@ export const VocalGamePanel: FC = () => {
               <span style={{ color: "#444" }}>音が検出されていません</span>
             )}
             {cents !== null && (
-              <span style={{ color: meterColor(cents), fontWeight: "bold", fontSize: ".85rem" }}>
+              <span
+                style={{
+                  color: meterColor(cents),
+                  fontWeight: "bold",
+                  fontSize: ".85rem",
+                }}
+              >
                 {cents > 0 ? `+${cents}` : cents}¢
               </span>
             )}
@@ -357,9 +396,19 @@ export const VocalGamePanel: FC = () => {
           {/* Hold progress */}
           {holdProgress > 0 && (
             <div>
-              <div style={{ display: "flex", justifyContent: "space-between", marginBottom: ".25rem" }}>
-                <span style={{ fontSize: ".8rem", color: "#4ade80" }}>キープ中...</span>
-                <span style={{ fontSize: ".8rem", color: "#4ade80" }}>{Math.round(holdProgress)}%</span>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  marginBottom: ".25rem",
+                }}
+              >
+                <span style={{ fontSize: ".8rem", color: "#4ade80" }}>
+                  キープ中...
+                </span>
+                <span style={{ fontSize: ".8rem", color: "#4ade80" }}>
+                  {Math.round(holdProgress)}%
+                </span>
               </div>
               <div
                 style={{
@@ -395,8 +444,14 @@ export const VocalGamePanel: FC = () => {
             textAlign: "center",
           }}
         >
-          <p style={{ fontSize: "1.5rem", fontWeight: "bold", color: "#4ade80" }}>成功!</p>
-          <p style={{ color: "#aaa", fontSize: ".875rem", marginTop: ".25rem" }}>
+          <p
+            style={{ fontSize: "1.5rem", fontWeight: "bold", color: "#4ade80" }}
+          >
+            成功!
+          </p>
+          <p
+            style={{ color: "#aaa", fontSize: ".875rem", marginTop: ".25rem" }}
+          >
             {targetNote?.label}({targetNote?.solfege}) を正確に歌えた
           </p>
         </div>
@@ -412,9 +467,16 @@ export const VocalGamePanel: FC = () => {
             textAlign: "center",
           }}
         >
-          <p style={{ fontSize: "1.5rem", fontWeight: "bold", color: "#f87171" }}>スキップ</p>
-          <p style={{ color: "#aaa", fontSize: ".875rem", marginTop: ".25rem" }}>
-            正解は {targetNote?.label}({targetNote?.solfege}) — {targetNote?.frequency}Hz
+          <p
+            style={{ fontSize: "1.5rem", fontWeight: "bold", color: "#f87171" }}
+          >
+            スキップ
+          </p>
+          <p
+            style={{ color: "#aaa", fontSize: ".875rem", marginTop: ".25rem" }}
+          >
+            正解は {targetNote?.label}({targetNote?.solfege}) —{" "}
+            {targetNote?.frequency}Hz
           </p>
         </div>
       )}
@@ -427,7 +489,7 @@ export const VocalGamePanel: FC = () => {
             padding: "1rem",
             borderRadius: ".5rem",
             border: "none",
-            backgroundColor: "#7c6bf0",
+            backgroundColor: "var(--accent)",
             color: "#fff",
             cursor: "pointer",
             fontSize: "1rem",
@@ -465,7 +527,7 @@ export const VocalGamePanel: FC = () => {
             padding: "1rem",
             borderRadius: ".5rem",
             border: "none",
-            backgroundColor: "#7c6bf0",
+            backgroundColor: "var(--accent)",
             color: "#fff",
             cursor: "pointer",
             fontSize: "1rem",
@@ -477,8 +539,10 @@ export const VocalGamePanel: FC = () => {
       )}
 
       {/* Progress dots */}
-      {(phase !== "idle" && phase !== "complete") && (
-        <div style={{ display: "flex", gap: ".5rem", justifyContent: "center" }}>
+      {phase !== "idle" && phase !== "complete" && (
+        <div
+          style={{ display: "flex", gap: ".5rem", justifyContent: "center" }}
+        >
           {Array.from({ length: GAME_ROUNDS }).map((_, i) => {
             const r = results[i]
             return (
@@ -488,7 +552,13 @@ export const VocalGamePanel: FC = () => {
                   width: "10px",
                   height: "10px",
                   borderRadius: "50%",
-                  backgroundColor: r ? (r.success ? "#4ade80" : "#f87171") : i === results.length ? "#7c6bf0" : "#333",
+                  backgroundColor: r
+                    ? r.success
+                      ? "#4ade80"
+                      : "#f87171"
+                    : i === results.length
+                      ? "var(--accent)"
+                      : "#333",
                 }}
               />
             )
@@ -498,7 +568,11 @@ export const VocalGamePanel: FC = () => {
 
       {/* Error */}
       {micError && (
-        <p style={{ color: "#f87171", fontSize: ".875rem", textAlign: "center" }}>{micError}</p>
+        <p
+          style={{ color: "#f87171", fontSize: ".875rem", textAlign: "center" }}
+        >
+          {micError}
+        </p>
       )}
 
       {/* Complete */}
@@ -509,17 +583,29 @@ export const VocalGamePanel: FC = () => {
             flexDirection: "column",
             gap: "1rem",
             padding: "1.5rem",
-            backgroundColor: "#1e1e2e",
-            border: "1px solid #7c6bf0",
+            backgroundColor: "var(--surface)",
+            border: "1px solid var(--accent)",
             borderRadius: ".75rem",
             textAlign: "center",
           }}
         >
-          <p style={{ color: "#7c6bf0", fontSize: ".8rem", letterSpacing: ".1em" }}>RESULT</p>
-          <p style={{ fontSize: "2.5rem", fontWeight: "bold", color: "#f0f0f0" }}>
+          <p
+            style={{
+              color: "var(--accent)",
+              fontSize: ".8rem",
+              letterSpacing: ".1em",
+            }}
+          >
+            RESULT
+          </p>
+          <p
+            style={{ fontSize: "2.5rem", fontWeight: "bold", color: "#f0f0f0" }}
+          >
             {correctCount} / {GAME_ROUNDS}
           </p>
-          <div style={{ display: "flex", gap: ".5rem", justifyContent: "center" }}>
+          <div
+            style={{ display: "flex", gap: ".5rem", justifyContent: "center" }}
+          >
             {results.map((r, i) => (
               <div
                 key={i}
@@ -538,7 +624,9 @@ export const VocalGamePanel: FC = () => {
                     backgroundColor: r.success ? "#4ade80" : "#f87171",
                   }}
                 />
-                <span style={{ fontSize: ".7rem", color: "#666" }}>{r.note.label}</span>
+                <span style={{ fontSize: ".7rem", color: "#666" }}>
+                  {r.note.label}
+                </span>
               </div>
             ))}
           </div>
@@ -548,7 +636,7 @@ export const VocalGamePanel: FC = () => {
               padding: ".75rem 2rem",
               borderRadius: ".5rem",
               border: "none",
-              backgroundColor: "#7c6bf0",
+              backgroundColor: "var(--accent)",
               color: "#fff",
               cursor: "pointer",
               fontSize: "1rem",

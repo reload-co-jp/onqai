@@ -66,46 +66,8 @@ const KIMIGAYO_NOTE_IDS = [
 ] as const
 
 const KIMIGAYO_DURATIONS = [
-  1,
-  1,
-  1,
-  1,
-  1,
-  1,
-  2,
-  1,
-  1,
-  1,
-  0.5,
-  0.5,
-  1,
-  1,
-  1,
-  1,
-  1,
-  1,
-  2,
-  1,
-  1,
-  2,
-  1,
-  1,
-  1,
-  1,
-  1.5,
-  0.5,
-  2,
-  1,
-  1,
-  2,
-  1,
-  1,
-  1,
-  1,
-  1,
-  0.5,
-  0.5,
-  2,
+  1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 0.5, 0.5, 1, 1, 1, 1, 1, 1, 2, 1, 1, 2, 1, 1, 1,
+  1, 1.5, 0.5, 2, 1, 1, 2, 1, 1, 1, 1, 1, 0.5, 0.5, 2,
 ]
 
 const KIMIGAYO_LYRICS = [
@@ -184,7 +146,10 @@ export const KimigayoVocalPanel: FC = () => {
   const currentLyric = KIMIGAYO_LYRICS[currentIndex]
   const completeCount = results.filter((result) => result.success).length
   const noteLine = useMemo(
-    () => KIMIGAYO_NOTES.map((note, index) => `${note.solfege}(${KIMIGAYO_LYRICS[index]})`).join(" "),
+    () =>
+      KIMIGAYO_NOTES.map(
+        (note, index) => `${note.solfege}(${KIMIGAYO_LYRICS[index]})`
+      ).join(" "),
     []
   )
 
@@ -234,7 +199,10 @@ export const KimigayoVocalPanel: FC = () => {
     resetDetection()
 
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false })
+      const stream = await navigator.mediaDevices.getUserMedia({
+        audio: true,
+        video: false,
+      })
       const ctx = new AudioContext()
       const analyser = ctx.createAnalyser()
       analyser.fftSize = 4096
@@ -264,7 +232,10 @@ export const KimigayoVocalPanel: FC = () => {
             const elapsed = performance.now() - holdStartRef.current
             setHoldProgress(Math.min((elapsed / HOLD_DURATION_MS) * 100, 100))
 
-            if (elapsed >= HOLD_DURATION_MS && phaseRef.current === "listening") {
+            if (
+              elapsed >= HOLD_DURATION_MS &&
+              phaseRef.current === "listening"
+            ) {
               finishCurrentNote(true)
               return
             }
@@ -303,7 +274,10 @@ export const KimigayoVocalPanel: FC = () => {
     startMic()
   }, [currentIndex, startMic])
 
-  const handleSkip = useCallback(() => finishCurrentNote(false), [finishCurrentNote])
+  const handleSkip = useCallback(
+    () => finishCurrentNote(false),
+    [finishCurrentNote]
+  )
 
   const handleReset = useCallback(() => {
     clearReferenceTimers()
@@ -316,7 +290,12 @@ export const KimigayoVocalPanel: FC = () => {
   }, [clearReferenceTimers, resetDetection, stopMic])
 
   const handlePlayReferenceNote = useCallback(() => {
-    playTone({ frequency: currentNote.frequency, type: "voice", duration: 1, volume: 0.24 })
+    playTone({
+      frequency: currentNote.frequency,
+      type: "voice",
+      duration: 1,
+      volume: 0.24,
+    })
   }, [currentNote])
 
   const handlePlayReferenceMelody = useCallback(() => {
@@ -343,17 +322,18 @@ export const KimigayoVocalPanel: FC = () => {
     timersRef.current.push(doneTimer)
   }, [clearReferenceTimers])
 
-  useEffect(() => () => {
-    clearReferenceTimers()
-    stopMic()
-  }, [clearReferenceTimers, stopMic])
+  useEffect(
+    () => () => {
+      clearReferenceTimers()
+      stopMic()
+    },
+    [clearReferenceTimers, stopMic]
+  )
 
   return (
     <div
+      className="page"
       style={{
-        maxWidth: "720px",
-        margin: "0 auto",
-        padding: "0 1rem 4rem",
         display: "flex",
         flexDirection: "column",
         gap: "1.5rem",
@@ -409,23 +389,53 @@ export const KimigayoVocalPanel: FC = () => {
         <div
           style={{
             padding: "2rem 1.5rem",
-            backgroundColor: "#1e1e2e",
+            backgroundColor: "var(--surface)",
             border: "1px solid #2d2460",
             borderRadius: ".75rem",
             textAlign: "center",
           }}
         >
-          <p style={{ color: "#7c6bf0", fontSize: ".8rem", letterSpacing: ".12em", marginBottom: ".5rem" }}>
-            KIMIGAYO — {Math.min(currentIndex + 1, KIMIGAYO_NOTES.length)} / {KIMIGAYO_NOTES.length}
+          <p
+            style={{
+              color: "var(--accent)",
+              fontSize: ".8rem",
+              letterSpacing: ".12em",
+              marginBottom: ".5rem",
+            }}
+          >
+            KIMIGAYO — {Math.min(currentIndex + 1, KIMIGAYO_NOTES.length)} /{" "}
+            {KIMIGAYO_NOTES.length}
           </p>
-          <p style={{ fontSize: "4rem", fontWeight: "bold", color: "#f0f0f0", lineHeight: 1 }}>
+          <p
+            style={{
+              fontSize: "4rem",
+              fontWeight: "bold",
+              color: "#f0f0f0",
+              lineHeight: 1,
+            }}
+          >
             {currentNote.label}
           </p>
-          <p style={{ color: "#aaa", fontSize: "1.25rem", marginTop: ".25rem" }}>{currentNote.solfege}</p>
-          <p style={{ color: "#f0f0f0", fontSize: "1.35rem", fontWeight: 700, marginTop: ".35rem" }}>
+          <p
+            style={{ color: "#aaa", fontSize: "1.25rem", marginTop: ".25rem" }}
+          >
+            {currentNote.solfege}
+          </p>
+          <p
+            style={{
+              color: "#f0f0f0",
+              fontSize: "1.35rem",
+              fontWeight: 700,
+              marginTop: ".35rem",
+            }}
+          >
             歌詞: {currentLyric}
           </p>
-          <p style={{ color: "#666", fontSize: ".875rem", marginTop: ".25rem" }}>{currentNote.frequency}Hz</p>
+          <p
+            style={{ color: "#666", fontSize: ".875rem", marginTop: ".25rem" }}
+          >
+            {currentNote.frequency}Hz
+          </p>
           <button
             onClick={handlePlayReferenceNote}
             style={{
@@ -445,7 +455,9 @@ export const KimigayoVocalPanel: FC = () => {
       )}
 
       {phase === "listening" && (
-        <div style={{ display: "flex", flexDirection: "column", gap: ".75rem" }}>
+        <div
+          style={{ display: "flex", flexDirection: "column", gap: ".75rem" }}
+        >
           <div
             style={{
               position: "relative",
@@ -492,10 +504,28 @@ export const KimigayoVocalPanel: FC = () => {
                 }}
               />
             )}
-            <span style={{ position: "absolute", left: "4px", top: "50%", transform: "translateY(-50%)", fontSize: ".7rem", color: "#555" }}>
+            <span
+              style={{
+                position: "absolute",
+                left: "4px",
+                top: "50%",
+                transform: "translateY(-50%)",
+                fontSize: ".7rem",
+                color: "#555",
+              }}
+            >
               低
             </span>
-            <span style={{ position: "absolute", right: "4px", top: "50%", transform: "translateY(-50%)", fontSize: ".7rem", color: "#555" }}>
+            <span
+              style={{
+                position: "absolute",
+                right: "4px",
+                top: "50%",
+                transform: "translateY(-50%)",
+                fontSize: ".7rem",
+                color: "#555",
+              }}
+            >
               高
             </span>
           </div>
@@ -522,7 +552,13 @@ export const KimigayoVocalPanel: FC = () => {
               <span style={{ color: "#444" }}>音なし</span>
             )}
             {cents !== null && (
-              <span style={{ color: meterColor(cents), fontWeight: "bold", fontSize: ".85rem" }}>
+              <span
+                style={{
+                  color: meterColor(cents),
+                  fontWeight: "bold",
+                  fontSize: ".85rem",
+                }}
+              >
                 {cents > 0 ? `+${cents}` : cents}¢
               </span>
             )}
@@ -530,11 +566,28 @@ export const KimigayoVocalPanel: FC = () => {
 
           {holdProgress > 0 && (
             <div>
-              <div style={{ display: "flex", justifyContent: "space-between", marginBottom: ".25rem" }}>
-                <span style={{ fontSize: ".8rem", color: "#4ade80" }}>キープ中</span>
-                <span style={{ fontSize: ".8rem", color: "#4ade80" }}>{Math.round(holdProgress)}%</span>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  marginBottom: ".25rem",
+                }}
+              >
+                <span style={{ fontSize: ".8rem", color: "#4ade80" }}>
+                  キープ中
+                </span>
+                <span style={{ fontSize: ".8rem", color: "#4ade80" }}>
+                  {Math.round(holdProgress)}%
+                </span>
               </div>
-              <div style={{ height: "6px", backgroundColor: "#1a1a1a", borderRadius: "3px", overflow: "hidden" }}>
+              <div
+                style={{
+                  height: "6px",
+                  backgroundColor: "#1a1a1a",
+                  borderRadius: "3px",
+                  overflow: "hidden",
+                }}
+              >
                 <div
                   style={{
                     height: "100%",
@@ -569,7 +622,7 @@ export const KimigayoVocalPanel: FC = () => {
             padding: "1rem",
             borderRadius: ".5rem",
             border: "none",
-            backgroundColor: "#7c6bf0",
+            backgroundColor: "var(--accent)",
             color: "#fff",
             cursor: "pointer",
             fontSize: "1rem",
@@ -604,7 +657,7 @@ export const KimigayoVocalPanel: FC = () => {
             padding: "1rem",
             borderRadius: ".5rem",
             border: "none",
-            backgroundColor: "#7c6bf0",
+            backgroundColor: "var(--accent)",
             color: "#fff",
             cursor: "pointer",
             fontSize: "1rem",
@@ -615,12 +668,26 @@ export const KimigayoVocalPanel: FC = () => {
         </button>
       )}
 
-      {micError && <p style={{ color: "#f87171", fontSize: ".875rem", textAlign: "center" }}>{micError}</p>}
+      {micError && (
+        <p
+          style={{ color: "#f87171", fontSize: ".875rem", textAlign: "center" }}
+        >
+          {micError}
+        </p>
+      )}
 
-      <div style={{ display: "flex", gap: ".25rem", flexWrap: "wrap", justifyContent: "center" }}>
+      <div
+        style={{
+          display: "flex",
+          gap: ".25rem",
+          flexWrap: "wrap",
+          justifyContent: "center",
+        }}
+      >
         {KIMIGAYO_NOTES.map((note, index) => {
           const result = results[index]
-          const active = phase !== "idle" && phase !== "complete" && index === currentIndex
+          const active =
+            phase !== "idle" && phase !== "complete" && index === currentIndex
           return (
             <span
               key={`${note.id}-${index}`}
@@ -636,11 +703,19 @@ export const KimigayoVocalPanel: FC = () => {
                 fontSize: ".7rem",
                 fontWeight: 700,
                 color: result ? "#111" : active ? "#fff" : "#777",
-                backgroundColor: result ? (result.success ? "#4ade80" : "#f87171") : active ? "#7c6bf0" : "#202020",
+                backgroundColor: result
+                  ? result.success
+                    ? "#4ade80"
+                    : "#f87171"
+                  : active
+                    ? "var(--accent)"
+                    : "#202020",
               }}
             >
               <span>{note.solfege}</span>
-              <span style={{ fontSize: ".65rem", fontWeight: 600 }}>{KIMIGAYO_LYRICS[index]}</span>
+              <span style={{ fontSize: ".65rem", fontWeight: 600 }}>
+                {KIMIGAYO_LYRICS[index]}
+              </span>
             </span>
           )
         })}
@@ -650,14 +725,24 @@ export const KimigayoVocalPanel: FC = () => {
         <div
           style={{
             padding: "1.5rem",
-            backgroundColor: "#1e1e2e",
-            border: "1px solid #7c6bf0",
+            backgroundColor: "var(--surface)",
+            border: "1px solid var(--accent)",
             borderRadius: ".75rem",
             textAlign: "center",
           }}
         >
-          <p style={{ color: "#7c6bf0", fontSize: ".8rem", letterSpacing: ".1em" }}>RESULT</p>
-          <p style={{ fontSize: "2.5rem", fontWeight: "bold", color: "#f0f0f0" }}>
+          <p
+            style={{
+              color: "var(--accent)",
+              fontSize: ".8rem",
+              letterSpacing: ".1em",
+            }}
+          >
+            RESULT
+          </p>
+          <p
+            style={{ fontSize: "2.5rem", fontWeight: "bold", color: "#f0f0f0" }}
+          >
             {completeCount} / {KIMIGAYO_NOTES.length}
           </p>
           <button
@@ -667,7 +752,7 @@ export const KimigayoVocalPanel: FC = () => {
               padding: ".75rem 1.5rem",
               borderRadius: ".5rem",
               border: "none",
-              backgroundColor: "#7c6bf0",
+              backgroundColor: "var(--accent)",
               color: "#fff",
               cursor: "pointer",
               fontSize: ".95rem",

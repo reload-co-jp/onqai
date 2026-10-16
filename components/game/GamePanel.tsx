@@ -60,7 +60,10 @@ export const GamePanel: FC = () => {
 
   const currentNotes = getNotesByDifficulty(state.difficulty)
   const isGameComplete = state.totalCount >= GAME_LIMIT
-  const accuracy = state.totalCount > 0 ? Math.round((state.correctCount / state.totalCount) * 100) : 0
+  const accuracy =
+    state.totalCount > 0
+      ? Math.round((state.correctCount / state.totalCount) * 100)
+      : 0
 
   const playNote = useCallback(
     (frequency: number, waveType: OscillatorWaveType) => {
@@ -90,7 +93,12 @@ export const GamePanel: FC = () => {
 
   const handleAnswer = useCallback(
     (noteId: string) => {
-      if (!state.currentNote || state.lastResult !== null || state.totalCount >= GAME_LIMIT) return
+      if (
+        !state.currentNote ||
+        state.lastResult !== null ||
+        state.totalCount >= GAME_LIMIT
+      )
+        return
       const correct = judgeAnswer(noteId, state.currentNote)
       setState((prev) => ({
         ...prev,
@@ -136,7 +144,11 @@ export const GamePanel: FC = () => {
     shareUrl.searchParams.set("hashtags", "音当てゲーム,音感トレーニング")
 
     try {
-      const opened = window.open(shareUrl.toString(), "_blank", "noopener,noreferrer")
+      const opened = window.open(
+        shareUrl.toString(),
+        "_blank",
+        "noopener,noreferrer"
+      )
 
       if (opened) {
         setShareMessage("Xの投稿画面を開きました")
@@ -152,7 +164,11 @@ export const GamePanel: FC = () => {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLButtonElement) return
+      if (
+        e.target instanceof HTMLInputElement ||
+        e.target instanceof HTMLButtonElement
+      )
+        return
       if (e.code === "Space" && !isGameComplete) {
         e.preventDefault()
         handlePlay()
@@ -166,20 +182,48 @@ export const GamePanel: FC = () => {
     }
     window.addEventListener("keydown", handleKeyDown)
     return () => window.removeEventListener("keydown", handleKeyDown)
-  }, [handlePlay, handleAnswer, state.currentNote, state.lastResult, currentNotes, isGameComplete])
+  }, [
+    handlePlay,
+    handleAnswer,
+    state.currentNote,
+    state.lastResult,
+    currentNotes,
+    isGameComplete,
+  ])
 
-  const canAnswer = state.currentNote !== null && state.lastResult === null && !isGameComplete
+  const canAnswer =
+    state.currentNote !== null && state.lastResult === null && !isGameComplete
 
   return (
-    <div style={{ maxWidth: "600px", margin: "0 auto", padding: "0 1rem 2rem", display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+    <div
+      className="page"
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: "1.5rem",
+      }}
+    >
       <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-        <WaveTypeSelector value={state.selectedWaveType} onChange={handleWaveChange} />
-        <DifficultySelector value={state.difficulty} onChange={handleDifficultyChange} />
+        <WaveTypeSelector
+          value={state.selectedWaveType}
+          onChange={handleWaveChange}
+        />
+        <DifficultySelector
+          value={state.difficulty}
+          onChange={handleDifficultyChange}
+        />
       </div>
 
       <WaveVisualizer isPlaying={isPlaying} />
 
-      <div style={{ display: "flex", gap: ".75rem", flexWrap: "wrap", alignItems: "center" }}>
+      <div
+        style={{
+          display: "flex",
+          gap: ".75rem",
+          flexWrap: "wrap",
+          alignItems: "center",
+        }}
+      >
         <button
           onClick={handlePlay}
           disabled={isPlaying || isGameComplete}
@@ -187,14 +231,19 @@ export const GamePanel: FC = () => {
             padding: ".75rem 2rem",
             borderRadius: ".5rem",
             border: "none",
-            backgroundColor: isPlaying || isGameComplete ? "#4a4080" : "#7c6bf0",
+            backgroundColor:
+              isPlaying || isGameComplete ? "#4a4080" : "var(--accent)",
             color: "#fff",
             cursor: isPlaying || isGameComplete ? "not-allowed" : "pointer",
             fontSize: "1rem",
             fontWeight: "bold",
           }}
         >
-          {isGameComplete ? "結果表示中" : state.currentNote ? "次の問題" : "再生"}
+          {isGameComplete
+            ? "結果表示中"
+            : state.currentNote
+              ? "次の問題"
+              : "再生"}
         </button>
         {state.currentNote && (
           <button
@@ -240,7 +289,10 @@ export const GamePanel: FC = () => {
             lastResult={state.lastResult}
             currentNote={state.currentNote}
           />
-          <FeedbackMessage result={state.lastResult} currentNote={state.currentNote} />
+          <FeedbackMessage
+            result={state.lastResult}
+            currentNote={state.currentNote}
+          />
         </div>
       )}
 
@@ -257,8 +309,8 @@ export const GamePanel: FC = () => {
             flexDirection: "column",
             gap: ".75rem",
             padding: "1rem",
-            backgroundColor: "#1e1e2e",
-            border: "1px solid #7c6bf0",
+            backgroundColor: "var(--surface)",
+            border: "1px solid var(--accent)",
             borderRadius: ".5rem",
           }}
         >
@@ -272,14 +324,21 @@ export const GamePanel: FC = () => {
         </div>
       )}
 
-      <div style={{ display: "flex", alignItems: "center", gap: ".75rem", flexWrap: "wrap" }}>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: ".75rem",
+          flexWrap: "wrap",
+        }}
+      >
         <button
           onClick={handleShare}
           disabled={!isGameComplete}
           style={{
             padding: ".75rem 1.25rem",
             borderRadius: ".5rem",
-            border: "1px solid #7c6bf0",
+            border: "1px solid var(--accent)",
             backgroundColor: isGameComplete ? "#2d2460" : "#2a2a2a",
             color: isGameComplete ? "#f0f0f0" : "#666",
             cursor: isGameComplete ? "pointer" : "not-allowed",
@@ -289,7 +348,9 @@ export const GamePanel: FC = () => {
         >
           Xでシェア
         </button>
-        {shareMessage && <p style={{ color: "#aaa", fontSize: ".875rem" }}>{shareMessage}</p>}
+        {shareMessage && (
+          <p style={{ color: "#aaa", fontSize: ".875rem" }}>{shareMessage}</p>
+        )}
       </div>
 
       <p style={{ fontSize: ".75rem", color: "#555", textAlign: "center" }}>

@@ -47,18 +47,20 @@ const pageJsonLd = {
 }
 
 const Page: FC = () => (
-  <div style={{ maxWidth: "760px", margin: "0 auto", padding: "2rem 0 0" }}>
+  <div style={{ paddingTop: "clamp(2.5rem, 6vw, 6rem)" }}>
     <script
       type="application/ld+json"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(pageJsonLd) }}
     />
-    <div style={{ textAlign: "center", marginBottom: "2rem", padding: "0 1rem" }}>
+    <div
+      style={{ textAlign: "center", marginBottom: "2rem", padding: "0 1rem" }}
+    >
       <p
         style={{
           fontSize: ".8rem",
           letterSpacing: ".14em",
           textTransform: "uppercase",
-          color: "#7c6bf0",
+          color: "var(--accent)",
           fontWeight: "600",
           marginBottom: ".5rem",
         }}
@@ -76,7 +78,15 @@ const Page: FC = () => (
       >
         君が代メロディ発声判定
       </h1>
-      <p style={{ color: "#aaa", fontSize: ".9375rem", maxWidth: "520px", margin: "0 auto", lineHeight: 1.8 }}>
+      <p
+        style={{
+          color: "#aaa",
+          fontSize: ".9375rem",
+          maxWidth: "520px",
+          margin: "0 auto",
+          lineHeight: 1.8,
+        }}
+      >
         参考メロディを聴き、表示された音を順番に歌う。55セント以内で短くキープすると次へ進む。
       </p>
     </div>

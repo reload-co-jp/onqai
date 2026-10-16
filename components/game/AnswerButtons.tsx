@@ -22,7 +22,8 @@ export const AnswerButtons: FC<Props> = ({
   <div style={{ display: "flex", gap: ".5rem", flexWrap: "wrap" }}>
     {notes.map((note) => {
       const isLastAnswer = lastAnswer === note.id
-      const isCorrectNote = lastResult === "wrong" && currentNote?.id === note.id
+      const isCorrectNote =
+        lastResult === "wrong" && currentNote?.id === note.id
 
       let borderColor = "#555"
       let bgColor = "#3a3a3a"
@@ -62,7 +63,11 @@ export const AnswerButtons: FC<Props> = ({
           }}
         >
           <span>{note.label}</span>
-          <span style={{ fontSize: ".75rem", fontWeight: "normal", opacity: 0.75 }}>{note.solfege}</span>
+          <span
+            style={{ fontSize: ".75rem", fontWeight: "normal", opacity: 0.75 }}
+          >
+            {note.solfege}
+          </span>
         </button>
       )
     })}

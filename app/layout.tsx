@@ -3,7 +3,14 @@ import { Nav } from "components/elements/Nav"
 import { PwaInstallButton } from "components/elements/PwaInstallButton"
 import type { Metadata, Viewport } from "next"
 import Script from "next/script"
+import { M_PLUS_Rounded_1c } from "next/font/google"
 import "./reset.css"
+
+const font = M_PLUS_Rounded_1c({
+  weight: ["400", "700"],
+  preload: false,
+  variable: "--font-body",
+})
 
 const siteUrl = "https://onqai.reload.co.jp"
 const title = "音当てゲーム"
@@ -68,7 +75,7 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor: "#222222",
+  themeColor: "#0d0b1a",
 }
 
 const websiteJsonLd = {
@@ -85,7 +92,7 @@ const isProduction = process.env.NODE_ENV === "production"
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <html lang="ja">
+    <html lang="ja" className={font.variable}>
       <body>
         {isProduction && (
           <>
@@ -111,10 +118,9 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
           {`if ('serviceWorker' in navigator) { navigator.serviceWorker.register('/sw.js') }`}
         </Script>
         <header
+          className="site-header"
           style={{
-            backgroundColor: "#333",
-            boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-            padding: ".5rem 1rem",
+            padding: "1rem var(--gutter)",
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
@@ -127,7 +133,6 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         </header>
         <main
           style={{
-            background: "#222",
             minHeight: "calc(100dvh - 5.625rem)",
           }}
         >
@@ -135,10 +140,10 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         </main>
         <footer
           style={{
-            backgroundColor: "#333",
-            boxShadow: "0 -4px 6px rgba(0, 0, 0, 0.1)",
+            borderTop: "1px solid var(--border)",
+            color: "var(--text-muted)",
             fontSize: ".75rem",
-            padding: "1rem",
+            padding: "2.5rem var(--gutter)",
           }}
         >
           <p>&copy; Onqai</p>

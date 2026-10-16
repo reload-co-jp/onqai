@@ -8,7 +8,8 @@ import { WaveTypeSelector } from "components/game/WaveTypeSelector"
 import { WaveVisualizer } from "components/game/WaveVisualizer"
 
 export const NotePreviewPanel: FC = () => {
-  const [selectedWaveType, setSelectedWaveType] = useState<OscillatorWaveType>("sine")
+  const [selectedWaveType, setSelectedWaveType] =
+    useState<OscillatorWaveType>("sine")
   const [isPlaying, setIsPlaying] = useState(false)
   const [previewNoteId, setPreviewNoteId] = useState<string | null>(null)
 
@@ -27,10 +28,8 @@ export const NotePreviewPanel: FC = () => {
 
   return (
     <div
+      className="page"
       style={{
-        maxWidth: "600px",
-        margin: "0 auto",
-        padding: "2.5rem 1rem 4rem",
         display: "flex",
         flexDirection: "column",
         gap: "1.5rem",
@@ -53,7 +52,10 @@ export const NotePreviewPanel: FC = () => {
         </p>
       </div>
 
-      <WaveTypeSelector value={selectedWaveType} onChange={setSelectedWaveType} />
+      <WaveTypeSelector
+        value={selectedWaveType}
+        onChange={setSelectedWaveType}
+      />
       <WaveVisualizer isPlaying={isPlaying} />
 
       <section
@@ -62,7 +64,7 @@ export const NotePreviewPanel: FC = () => {
           flexDirection: "column",
           gap: ".75rem",
           padding: "1rem",
-          backgroundColor: "#1e1e2e",
+          backgroundColor: "var(--surface)",
           border: "1px solid #333",
           borderRadius: ".5rem",
         }}

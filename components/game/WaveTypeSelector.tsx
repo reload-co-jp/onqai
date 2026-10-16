@@ -22,7 +22,9 @@ type Props = {
 
 export const WaveTypeSelector: FC<Props> = ({ value, onChange }) => (
   <div>
-    <p style={{ fontSize: ".875rem", marginBottom: ".5rem", color: "#aaa" }}>音色</p>
+    <p style={{ fontSize: ".875rem", marginBottom: ".5rem", color: "#aaa" }}>
+      音色
+    </p>
     <div style={{ display: "flex", gap: ".5rem", flexWrap: "wrap" }}>
       {WAVE_TYPES.map((wave) => (
         <label
@@ -33,7 +35,7 @@ export const WaveTypeSelector: FC<Props> = ({ value, onChange }) => (
             cursor: "pointer",
             padding: ".375rem .75rem",
             borderRadius: ".375rem",
-            border: `1px solid ${value === wave.value ? "#7c6bf0" : "#555"}`,
+            border: `1px solid ${value === wave.value ? "var(--accent)" : "#555"}`,
             backgroundColor: value === wave.value ? "#2d2460" : "transparent",
             fontSize: ".875rem",
           }}

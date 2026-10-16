@@ -7,7 +7,8 @@ type Props = {
 }
 
 export const ScoreBoard: FC<Props> = ({ correctCount, totalCount, streak }) => {
-  const accuracy = totalCount > 0 ? Math.round((correctCount / totalCount) * 100) : 0
+  const accuracy =
+    totalCount > 0 ? Math.round((correctCount / totalCount) * 100) : 0
 
   return (
     <div

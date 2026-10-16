@@ -2,7 +2,12 @@
 import { FC, useCallback, useEffect, useRef, useState } from "react"
 import type { OscillatorWaveType } from "types/game"
 import { playTone } from "lib/audio"
-import { chordFrequencies, PROGRESSIONS, type Chord, type Progression } from "lib/chords"
+import {
+  chordFrequencies,
+  PROGRESSIONS,
+  type Chord,
+  type Progression,
+} from "lib/chords"
 import { WaveTypeSelector } from "components/game/WaveTypeSelector"
 
 const CHORD_DURATION = 0.85
@@ -10,7 +15,12 @@ const CHORD_INTERVAL_MS = 750
 
 const playChord = (chord: Chord, waveType: OscillatorWaveType) => {
   chordFrequencies(chord).forEach((frequency) => {
-    playTone({ frequency, type: waveType, duration: CHORD_DURATION, volume: 0.22 })
+    playTone({
+      frequency,
+      type: waveType,
+      duration: CHORD_DURATION,
+      volume: 0.22,
+    })
   })
 }
 
@@ -58,10 +68,8 @@ export const ChordProgressionPanel: FC = () => {
 
   return (
     <div
+      className="page"
       style={{
-        maxWidth: "780px",
-        margin: "0 auto",
-        padding: "2.5rem 1.25rem 4rem",
         display: "flex",
         flexDirection: "column",
         gap: "1.5rem",
@@ -95,8 +103,8 @@ export const ChordProgressionPanel: FC = () => {
               key={progression.id}
               style={{
                 padding: "1.25rem",
-                backgroundColor: "#1e1e2e",
-                border: `1px solid ${isPlaying ? "#7c6bf0" : "#333"}`,
+                backgroundColor: "var(--surface)",
+                border: `1px solid ${isPlaying ? "var(--accent)" : "#333"}`,
                 borderRadius: ".5rem",
               }}
             >
@@ -110,10 +118,22 @@ export const ChordProgressionPanel: FC = () => {
                 }}
               >
                 <div>
-                  <h2 style={{ color: "#f0f0f0", fontSize: "1.125rem", fontWeight: "bold" }}>
+                  <h2
+                    style={{
+                      color: "#f0f0f0",
+                      fontSize: "1.125rem",
+                      fontWeight: "bold",
+                    }}
+                  >
                     {progression.name}
                   </h2>
-                  <p style={{ color: "#7c6bf0", fontSize: ".8125rem", marginTop: ".25rem" }}>
+                  <p
+                    style={{
+                      color: "var(--accent)",
+                      fontSize: ".8125rem",
+                      marginTop: ".25rem",
+                    }}
+                  >
                     {progression.mood}
                   </p>
                 </div>
@@ -124,7 +144,7 @@ export const ChordProgressionPanel: FC = () => {
                     padding: ".5rem 1.25rem",
                     borderRadius: ".375rem",
                     border: "none",
-                    backgroundColor: isBusy ? "#444" : "#7c6bf0",
+                    backgroundColor: isBusy ? "#444" : "var(--accent)",
                     color: "#fff",
                     fontWeight: "bold",
                     fontSize: ".875rem",
@@ -135,7 +155,14 @@ export const ChordProgressionPanel: FC = () => {
                 </button>
               </div>
 
-              <p style={{ color: "#bbb", fontSize: ".9375rem", lineHeight: 1.7, margin: "1rem 0" }}>
+              <p
+                style={{
+                  color: "#bbb",
+                  fontSize: ".9375rem",
+                  lineHeight: 1.7,
+                  margin: "1rem 0",
+                }}
+              >
                 {progression.description}
               </p>
 
@@ -151,7 +178,7 @@ export const ChordProgressionPanel: FC = () => {
                         fontSize: ".9375rem",
                         fontWeight: "bold",
                         color: isActive ? "#fff" : "#ccc",
-                        backgroundColor: isActive ? "#7c6bf0" : "#2a2a2a",
+                        backgroundColor: isActive ? "var(--accent)" : "#2a2a2a",
                         border: "1px solid #444",
                         transition: "background-color .1s, color .1s",
                       }}

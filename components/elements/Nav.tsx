@@ -37,16 +37,22 @@ export const Nav: FC = () => {
             <li key={href}>
               <Link
                 href={href}
+                className={active ? undefined : "nav-link"}
                 style={{
                   display: "block",
-                  padding: ".375rem .75rem",
-                  borderRadius: ".375rem",
+                  padding: ".375rem .875rem",
+                  borderRadius: "999px",
                   fontSize: ".875rem",
-                  color: active ? "#f0f0f0" : "#999",
-                  backgroundColor: active ? "#2d2460" : "transparent",
+                  color: active ? "#fff" : "var(--text-muted)",
+                  background: active
+                    ? "linear-gradient(135deg, var(--accent), var(--accent-2))"
+                    : "transparent",
                   textDecoration: "none",
                   fontWeight: active ? "600" : "400",
-                  border: `1px solid ${active ? "#7c6bf0" : "transparent"}`,
+                  border: "1px solid transparent",
+                  boxShadow: active
+                    ? "0 4px 16px rgba(139, 123, 255, 0.35)"
+                    : "none",
                 }}
               >
                 {label}

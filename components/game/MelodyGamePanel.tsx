@@ -38,9 +38,14 @@ function shuffle<T>(items: T[]): T[] {
   return [...items].sort(() => Math.random() - 0.5)
 }
 
-function createQuestion(): Pick<MelodyGameState, "current" | "options" | "selectedId" | "result"> {
+function createQuestion(): Pick<
+  MelodyGameState,
+  "current" | "options" | "selectedId" | "result"
+> {
   const current = MELODIES[Math.floor(Math.random() * MELODIES.length)]
-  const distractors = shuffle(MELODIES.filter((melody) => melody.id !== current.id)).slice(0, 3)
+  const distractors = shuffle(
+    MELODIES.filter((melody) => melody.id !== current.id)
+  ).slice(0, 3)
 
   return {
     current,
@@ -147,10 +152,8 @@ export const MelodyGamePanel: FC = () => {
 
   return (
     <div
+      className="page"
       style={{
-        maxWidth: "760px",
-        margin: "0 auto",
-        padding: "2.5rem 1rem 4rem",
         display: "flex",
         flexDirection: "column",
         gap: "1.5rem",
@@ -159,7 +162,7 @@ export const MelodyGamePanel: FC = () => {
       <div>
         <p
           style={{
-            color: "#7c6bf0",
+            color: "var(--accent)",
             fontSize: ".8rem",
             fontWeight: 700,
             letterSpacing: ".12em",
@@ -169,7 +172,14 @@ export const MelodyGamePanel: FC = () => {
         >
           Melody
         </p>
-        <h1 style={{ color: "#f0f0f0", fontSize: "2rem", lineHeight: 1.35, marginBottom: ".75rem" }}>
+        <h1
+          style={{
+            color: "#f0f0f0",
+            fontSize: "2rem",
+            lineHeight: 1.35,
+            marginBottom: ".75rem",
+          }}
+        >
           童謡・民謡メロディ音階ゲーム
         </h1>
         <p style={{ color: "#aaa", lineHeight: 1.8 }}>
@@ -185,26 +195,65 @@ export const MelodyGamePanel: FC = () => {
         }}
       >
         <div style={statStyle}>
-          <div style={{ color: "#888", fontSize: ".8rem", marginBottom: ".35rem" }}>正解</div>
-          <div style={{ color: "#f0f0f0", fontSize: "1.35rem", fontWeight: 700 }}>
+          <div
+            style={{ color: "#888", fontSize: ".8rem", marginBottom: ".35rem" }}
+          >
+            正解
+          </div>
+          <div
+            style={{ color: "#f0f0f0", fontSize: "1.35rem", fontWeight: 700 }}
+          >
             {state.correctCount}/{state.totalCount}
           </div>
         </div>
         <div style={statStyle}>
-          <div style={{ color: "#888", fontSize: ".8rem", marginBottom: ".35rem" }}>正答率</div>
-          <div style={{ color: "#f0f0f0", fontSize: "1.35rem", fontWeight: 700 }}>{accuracy}%</div>
+          <div
+            style={{ color: "#888", fontSize: ".8rem", marginBottom: ".35rem" }}
+          >
+            正答率
+          </div>
+          <div
+            style={{ color: "#f0f0f0", fontSize: "1.35rem", fontWeight: 700 }}
+          >
+            {accuracy}%
+          </div>
         </div>
         <div style={statStyle}>
-          <div style={{ color: "#888", fontSize: ".8rem", marginBottom: ".35rem" }}>連続</div>
-          <div style={{ color: "#f0f0f0", fontSize: "1.35rem", fontWeight: 700 }}>{state.streak}</div>
+          <div
+            style={{ color: "#888", fontSize: ".8rem", marginBottom: ".35rem" }}
+          >
+            連続
+          </div>
+          <div
+            style={{ color: "#f0f0f0", fontSize: "1.35rem", fontWeight: 700 }}
+          >
+            {state.streak}
+          </div>
         </div>
       </div>
 
-      <div style={{ display: "flex", gap: ".75rem", flexWrap: "wrap", alignItems: "center" }}>
-        <WaveTypeSelector value={state.selectedWaveType} onChange={handleWaveChange} />
+      <div
+        style={{
+          display: "flex",
+          gap: ".75rem",
+          flexWrap: "wrap",
+          alignItems: "center",
+        }}
+      >
+        <WaveTypeSelector
+          value={state.selectedWaveType}
+          onChange={handleWaveChange}
+        />
       </div>
 
-      <div style={{ display: "flex", gap: ".75rem", flexWrap: "wrap", alignItems: "center" }}>
+      <div
+        style={{
+          display: "flex",
+          gap: ".75rem",
+          flexWrap: "wrap",
+          alignItems: "center",
+        }}
+      >
         <button
           onClick={handleStart}
           disabled={isPlaying}
@@ -212,7 +261,7 @@ export const MelodyGamePanel: FC = () => {
             padding: ".75rem 1.75rem",
             borderRadius: ".5rem",
             border: "none",
-            backgroundColor: isPlaying ? "#4a4080" : "#7c6bf0",
+            backgroundColor: isPlaying ? "#4a4080" : "var(--accent)",
             color: "#fff",
             cursor: isPlaying ? "not-allowed" : "pointer",
             fontSize: "1rem",
@@ -256,12 +305,21 @@ export const MelodyGamePanel: FC = () => {
       </div>
 
       {state.current && (
-        <div style={{ display: "flex", flexDirection: "column", gap: ".75rem" }}>
+        <div
+          style={{ display: "flex", flexDirection: "column", gap: ".75rem" }}
+        >
           <h2 style={{ color: "#f0f0f0", fontSize: "1rem" }}>音階を選ぶ</h2>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(14rem, 1fr))", gap: ".75rem" }}>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(14rem, 1fr))",
+              gap: ".75rem",
+            }}
+          >
             {state.options.map((melody) => {
               const selected = state.selectedId === melody.id
-              const isCorrect = state.result !== null && melody.id === state.current?.id
+              const isCorrect =
+                state.result !== null && melody.id === state.current?.id
               const isWrong = selected && state.result === "wrong"
 
               return (
@@ -274,17 +332,35 @@ export const MelodyGamePanel: FC = () => {
                     padding: "1rem",
                     borderRadius: ".5rem",
                     border: `1px solid ${isCorrect ? "#31c48d" : isWrong ? "#f05252" : "#444"}`,
-                    backgroundColor: isCorrect ? "#12382d" : isWrong ? "#3c1b1b" : "#1b1b1b",
+                    backgroundColor: isCorrect
+                      ? "#12382d"
+                      : isWrong
+                        ? "#3c1b1b"
+                        : "#1b1b1b",
                     color: "#f0f0f0",
                     cursor: state.result === null ? "pointer" : "default",
                     textAlign: "left",
                   }}
                 >
-                  <span style={{ display: "block", fontSize: "1.05rem", fontWeight: 700, lineHeight: 1.7 }}>
+                  <span
+                    style={{
+                      display: "block",
+                      fontSize: "1.05rem",
+                      fontWeight: 700,
+                      lineHeight: 1.7,
+                    }}
+                  >
                     {melodyAnswer(melody)}
                   </span>
                   {state.result !== null && (
-                    <span style={{ color: "#999", display: "block", fontSize: ".85rem", marginTop: ".35rem" }}>
+                    <span
+                      style={{
+                        color: "#999",
+                        display: "block",
+                        fontSize: ".85rem",
+                        marginTop: ".35rem",
+                      }}
+                    >
                       {melody.title} / {melody.origin}
                     </span>
                   )}

@@ -35,14 +35,14 @@ export const metadata: Metadata = {
 }
 
 const Page: FC = () => (
-  <div style={{ maxWidth: "600px", margin: "0 auto", padding: "2rem 1rem 0" }}>
+  <div style={{ paddingTop: "clamp(2.5rem, 6vw, 6rem)" }}>
     <div style={{ textAlign: "center", marginBottom: "2rem" }}>
       <p
         style={{
           fontSize: ".8rem",
           letterSpacing: ".14em",
           textTransform: "uppercase",
-          color: "#7c6bf0",
+          color: "var(--accent)",
           fontWeight: "600",
           marginBottom: ".5rem",
         }}
@@ -60,7 +60,14 @@ const Page: FC = () => (
       >
         発声ピッチゲーム
       </h1>
-      <p style={{ color: "#aaa", fontSize: ".9375rem", maxWidth: "440px", margin: "0 auto" }}>
+      <p
+        style={{
+          color: "#aaa",
+          fontSize: ".9375rem",
+          maxWidth: "440px",
+          margin: "0 auto",
+        }}
+      >
         表示された音階をマイクに向かって歌い、1.5秒キープすると成功。
         参考音を聴いて音程を確かめてから挑戦しよう。
       </p>
