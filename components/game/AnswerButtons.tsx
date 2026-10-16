@@ -47,10 +47,10 @@ export const AnswerButtons: FC<Props> = ({
           aria-label={`${note.label}で回答`}
           style={{
             padding: ".75rem 1.25rem",
-            borderRadius: ".5rem",
+            borderRadius: 0,
             border: `2px solid ${borderColor}`,
             backgroundColor: bgColor,
-            color: "#f0f0f0",
+            color: "var(--text)",
             cursor: disabled ? "not-allowed" : "pointer",
             fontSize: "1.125rem",
             fontWeight: "bold",

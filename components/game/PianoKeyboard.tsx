@@ -29,10 +29,9 @@ const BLACK_KEYS = [
   { id: "As4", label: "A#", solfege: "ラ#", afterWhiteIdx: 5 },
 ]
 
-const W = 52
-const H = 160
-const BW = 32
-const BH = 98
+// 鍵盤は幅いっぱいに伸縮。黒鍵幅は白鍵の6割
+const WHITE_PCT = 100 / WHITE_KEYS.length
+const BLACK_PCT = WHITE_PCT * 0.6
 
 export const PianoKeyboard: FC<Props> = ({
   notes,
@@ -49,118 +48,118 @@ export const PianoKeyboard: FC<Props> = ({
     const isCorrectHint = lastResult === "wrong" && currentNote?.id === id
     const available = noteIds.has(id)
 
-    if (isLastAnswer && lastResult === "correct") {
-      return { bg: "#1a4731", border: "#22c55e", color: "#22c55e" }
+    if ((isLastAnswer && lastResult === "correct") || isCorrectHint) {
+      return { bg: "var(--success)", color: "var(--paper)" }
     }
     if (isLastAnswer && lastResult === "wrong") {
-      return { bg: "#4c1a1a", border: "#ef4444", color: "#ef4444" }
-    }
-    if (isCorrectHint) {
-      return { bg: "#1a4731", border: "#22c55e", color: "#22c55e" }
+      return { bg: "var(--error)", color: "var(--paper)" }
     }
     if (!available) {
       return {
-        bg: isWhite ? "#4a4a4a" : "#2a2a2a",
-        border: "#3a3a3a",
-        color: "#555",
+        bg: isWhite
+          ? "repeating-linear-gradient(-45deg, var(--surface) 0 4px, var(--paper) 4px 8px)"
+          : "var(--text-muted)",
+        color: "var(--text-faint)",
       }
     }
     return {
-      bg: isWhite ? "#e8e8e8" : "#222",
-      border: "#555",
-      color: isWhite ? "#333" : "#ccc",
+      bg: isWhite ? "var(--paper)" : "var(--text)",
+      color: isWhite ? "var(--text)" : "var(--paper)",
     }
   }
 
   return (
-    <div style={{ overflowX: "auto", paddingBottom: ".5rem" }}>
-      <div
-        style={{
-          position: "relative",
-          width: WHITE_KEYS.length * W,
-          height: H,
-          flexShrink: 0,
-        }}
-      >
-        {WHITE_KEYS.map((key, i) => {
-          const { bg, border, color } = resolveColors(key.id, true)
-          const available = noteIds.has(key.id)
-          return (
-            <button
-              key={key.id}
-              onClick={() => !disabled && available && onAnswer(key.id)}
-              disabled={disabled || !available}
-              style={{
-                position: "absolute",
-                left: i * W,
-                top: 0,
-                width: W - 2,
-                height: H,
-                backgroundColor: bg,
-                border: `2px solid ${border}`,
-                borderRadius: "0 0 .375rem .375rem",
-                cursor: disabled || !available ? "default" : "pointer",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "flex-end",
-                alignItems: "center",
-                paddingBottom: ".5rem",
-                gap: ".125rem",
-                color,
-                fontSize: ".75rem",
-                fontWeight: "bold",
-                zIndex: 1,
-              }}
-            >
-              <span>{key.label}</span>
-              <span style={{ fontSize: ".625rem", fontWeight: "normal" }}>
-                {key.solfege}
-              </span>
-            </button>
-          )
-        })}
+    <div
+      className="piano"
+      style={{
+        position: "relative",
+        width: "100%",
+        maxWidth: "36rem",
+        height: "clamp(9rem, 28vw, 12rem)",
+        borderTop: "4px solid var(--rule)",
+      }}
+    >
+      {WHITE_KEYS.map((key, i) => {
+        const { bg, color } = resolveColors(key.id, true)
+        const available = noteIds.has(key.id)
+        return (
+          <button
+            key={key.id}
+            onClick={() => !disabled && available && onAnswer(key.id)}
+            disabled={disabled || !available}
+            aria-label={`${key.label}（${key.solfege}）で回答`}
+            style={{
+              position: "absolute",
+              left: `${i * WHITE_PCT}%`,
+              top: 0,
+              width: `calc(${WHITE_PCT}% + 1px)`,
+              height: "100%",
+              background: bg,
+              border: "1px solid var(--rule)",
+              borderTop: "none",
+              borderRadius: 0,
+              cursor: disabled || !available ? "default" : "pointer",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "flex-end",
+              alignItems: "center",
+              paddingBottom: ".625rem",
+              gap: ".125rem",
+              color,
+              fontSize: ".9375rem",
+              fontWeight: "bold",
+              zIndex: 1,
+            }}
+          >
+            <span>{key.label}</span>
+            <span style={{ fontSize: ".6875rem", fontWeight: "normal" }}>
+              {key.solfege}
+            </span>
+          </button>
+        )
+      })}
 
-        {BLACK_KEYS.map((key) => {
-          const { bg, border, color } = resolveColors(key.id, false)
-          const available = noteIds.has(key.id)
-          const left = (key.afterWhiteIdx + 1) * W - BW / 2 - 1
-          return (
-            <button
-              key={key.id}
-              onClick={() => !disabled && available && onAnswer(key.id)}
-              disabled={disabled || !available}
-              style={{
-                position: "absolute",
-                left,
-                top: 0,
-                width: BW,
-                height: BH,
-                backgroundColor: bg,
-                border: `2px solid ${border}`,
-                borderRadius: "0 0 .25rem .25rem",
-                cursor: disabled || !available ? "default" : "pointer",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "flex-end",
-                alignItems: "center",
-                paddingBottom: ".25rem",
-                gap: ".0625rem",
-                color,
-                fontSize: ".5rem",
-                fontWeight: "bold",
-                zIndex: 2,
-              }}
-            >
-              {available && (
-                <>
-                  <span>{key.label}</span>
-                  <span style={{ fontWeight: "normal" }}>{key.solfege}</span>
-                </>
-              )}
-            </button>
-          )
-        })}
-      </div>
+      {BLACK_KEYS.map((key) => {
+        const { bg, color } = resolveColors(key.id, false)
+        const available = noteIds.has(key.id)
+        return (
+          <button
+            key={key.id}
+            onClick={() => !disabled && available && onAnswer(key.id)}
+            disabled={disabled || !available}
+            aria-label={`${key.label}（${key.solfege}）で回答`}
+            style={{
+              position: "absolute",
+              left: `${(key.afterWhiteIdx + 1) * WHITE_PCT - BLACK_PCT / 2}%`,
+              top: 0,
+              width: `${BLACK_PCT}%`,
+              height: "60%",
+              background: bg,
+              border: "1px solid var(--rule)",
+              borderTop: "none",
+              borderRadius: 0,
+              cursor: disabled || !available ? "default" : "pointer",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "flex-end",
+              alignItems: "center",
+              paddingBottom: ".375rem",
+              gap: ".0625rem",
+              color,
+              fontSize: ".625rem",
+              fontWeight: "bold",
+              zIndex: 2,
+            }}
+          >
+            {available && (
+              <>
+                <span>{key.label}</span>
+                <span style={{ fontWeight: "normal" }}>{key.solfege}</span>
+              </>
+            )}
+          </button>
+        )
+      })}
     </div>
   )
 }

@@ -69,13 +69,13 @@ const noteRows = [
 
 const body: React.CSSProperties = {
   fontSize: "1rem",
-  color: "#ccc",
+  color: "var(--text-muted)",
   lineHeight: 1.9,
   margin: "0 0 1rem",
 }
 
 const strong: React.CSSProperties = {
-  color: "#f0f0f0",
+  color: "var(--text)",
   fontWeight: "700",
 }
 
@@ -83,12 +83,14 @@ const Section: FC<{ title: string; children: React.ReactNode }> = ({
   title,
   children,
 }) => (
-  <section style={{ padding: "2rem 0", borderBottom: "1px solid #2a2a2a" }}>
+  <section
+    style={{ padding: "2rem 0", borderBottom: "1px solid var(--border)" }}
+  >
     <h2
       style={{
         fontSize: "1.35rem",
         fontWeight: "bold",
-        color: "#a89af5",
+        color: "var(--accent)",
         marginBottom: "1rem",
       }}
     >
@@ -122,7 +124,7 @@ const Page: FC = () => (
         style={{
           fontSize: "clamp(1.75rem, 5vw, 2.6rem)",
           fontWeight: "bold",
-          color: "#f0f0f0",
+          color: "var(--text)",
           lineHeight: 1.3,
           marginBottom: "1rem",
         }}
@@ -130,7 +132,12 @@ const Page: FC = () => (
         音程・ABC・ドレミ・周波数の基礎
       </h1>
       <p
-        style={{ ...body, maxWidth: "600px", margin: "0 auto", color: "#aaa" }}
+        style={{
+          ...body,
+          maxWidth: "600px",
+          margin: "0 auto",
+          color: "var(--text-muted)",
+        }}
       >
         音の高さは、音名だけでなく<span style={strong}>周波数</span>
         でも表せます。
@@ -179,14 +186,14 @@ const Page: FC = () => (
             style={{
               padding: "1rem",
               backgroundColor: "var(--surface)",
-              border: "1px solid #2d2460",
-              borderRadius: ".5rem",
+              border: "1px solid var(--border)",
+              borderRadius: 0,
               textAlign: "center",
             }}
           >
             <div
               style={{
-                color: "#f0f0f0",
+                color: "var(--text)",
                 fontSize: "1.35rem",
                 fontWeight: "bold",
               }}
@@ -195,7 +202,7 @@ const Page: FC = () => (
             </div>
             <div
               style={{
-                color: "#aaa",
+                color: "var(--text-muted)",
                 fontSize: ".9375rem",
                 marginTop: ".25rem",
               }}
@@ -225,7 +232,7 @@ const Page: FC = () => (
           style={{
             width: "100%",
             borderCollapse: "collapse",
-            color: "#ccc",
+            color: "var(--text-muted)",
             fontSize: ".9375rem",
           }}
         >
@@ -237,8 +244,8 @@ const Page: FC = () => (
                   style={{
                     textAlign: "left",
                     padding: ".75rem",
-                    color: "#f0f0f0",
-                    borderBottom: "1px solid #444",
+                    color: "var(--text)",
+                    borderBottom: "1px solid var(--border)",
                     backgroundColor: "var(--surface)",
                   }}
                 >
@@ -253,7 +260,7 @@ const Page: FC = () => (
                 <td
                   style={{
                     padding: ".75rem",
-                    borderBottom: "1px solid #2a2a2a",
+                    borderBottom: "1px solid var(--border)",
                     fontWeight: "700",
                   }}
                 >
@@ -262,7 +269,7 @@ const Page: FC = () => (
                 <td
                   style={{
                     padding: ".75rem",
-                    borderBottom: "1px solid #2a2a2a",
+                    borderBottom: "1px solid var(--border)",
                   }}
                 >
                   {solfege}
@@ -270,7 +277,7 @@ const Page: FC = () => (
                 <td
                   style={{
                     padding: ".75rem",
-                    borderBottom: "1px solid #2a2a2a",
+                    borderBottom: "1px solid var(--border)",
                   }}
                 >
                   {frequency}
@@ -278,7 +285,7 @@ const Page: FC = () => (
                 <td
                   style={{
                     padding: ".75rem",
-                    borderBottom: "1px solid #2a2a2a",
+                    borderBottom: "1px solid var(--border)",
                   }}
                 >
                   {hint}
@@ -307,13 +314,13 @@ const Page: FC = () => (
         textAlign: "center",
         padding: "2rem 1rem",
         backgroundColor: "var(--surface)",
-        borderRadius: ".5rem",
-        border: "1px solid #2d2460",
+        borderRadius: 0,
+        border: "1px solid var(--border)",
       }}
     >
       <p
         style={{
-          color: "#f0f0f0",
+          color: "var(--text)",
           fontSize: "1.125rem",
           fontWeight: "bold",
           marginBottom: ".5rem",
@@ -321,7 +328,13 @@ const Page: FC = () => (
       >
         音を聴いて対応を覚える
       </p>
-      <p style={{ color: "#888", fontSize: ".875rem", marginBottom: "1.5rem" }}>
+      <p
+        style={{
+          color: "var(--text-muted)",
+          fontSize: ".875rem",
+          marginBottom: "1.5rem",
+        }}
+      >
         表で見た音名を、実際の高さと結びつけます。
       </p>
       <Link
@@ -329,9 +342,9 @@ const Page: FC = () => (
         style={{
           display: "inline-block",
           padding: ".75rem 2.5rem",
-          borderRadius: ".5rem",
+          borderRadius: 0,
           backgroundColor: "var(--accent)",
-          color: "#fff",
+          color: "var(--paper)",
           textDecoration: "none",
           fontWeight: "bold",
           fontSize: "1rem",

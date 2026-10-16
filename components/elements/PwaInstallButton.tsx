@@ -27,12 +27,12 @@ export const PwaInstallButton = () => {
         setPrompt(null)
       }}
       style={{
-        marginTop: ".5rem",
+        alignSelf: "flex-start",
         padding: ".4rem .9rem",
-        background: "#555",
-        color: "#fff",
-        border: "1px solid #777",
-        borderRadius: ".4rem",
+        background: "transparent",
+        color: "var(--text)",
+        border: "1px solid var(--rule)",
+        borderRadius: 0,
         fontSize: ".75rem",
         cursor: "pointer",
       }}

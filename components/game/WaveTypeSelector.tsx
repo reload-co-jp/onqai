@@ -21,36 +21,67 @@ type Props = {
 }
 
 export const WaveTypeSelector: FC<Props> = ({ value, onChange }) => (
-  <div>
-    <p style={{ fontSize: ".875rem", marginBottom: ".5rem", color: "#aaa" }}>
-      音色
-    </p>
-    <div style={{ display: "flex", gap: ".5rem", flexWrap: "wrap" }}>
-      {WAVE_TYPES.map((wave) => (
-        <label
-          key={wave.value}
-          style={{
-            display: "flex",
-            alignItems: "center",
-            cursor: "pointer",
-            padding: ".375rem .75rem",
-            borderRadius: ".375rem",
-            border: `1px solid ${value === wave.value ? "var(--accent)" : "#555"}`,
-            backgroundColor: value === wave.value ? "#2d2460" : "transparent",
-            fontSize: ".875rem",
-          }}
-        >
-          <input
-            type="radio"
-            name="waveType"
-            value={wave.value}
-            checked={value === wave.value}
-            onChange={() => onChange(wave.value)}
-            style={{ display: "none" }}
-          />
-          {wave.label}
-        </label>
-      ))}
+  <fieldset style={{ border: "none", padding: 0, minWidth: 0, width: "100%" }}>
+    <legend
+      className="mono"
+      style={{
+        width: "100%",
+        color: "var(--text-muted)",
+        borderBottom: "1px solid var(--rule)",
+        paddingBottom: ".375rem",
+        marginBottom: ".5rem",
+      }}
+    >
+      Timbre / 音色
+    </legend>
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fill, minmax(8.5rem, 1fr))",
+        gap: "1px",
+        background: "var(--border)",
+        border: "1px solid var(--border)",
+      }}
+    >
+      {WAVE_TYPES.map((wave, i) => {
+        const checked = value === wave.value
+        return (
+          <label
+            key={wave.value}
+            className="option"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: ".5rem",
+              cursor: "pointer",
+              padding: ".625rem .75rem",
+              minHeight: "2.75rem",
+              backgroundColor: checked ? "var(--text)" : "var(--paper)",
+              color: checked ? "var(--paper)" : "var(--text)",
+              fontSize: ".875rem",
+            }}
+          >
+            <input
+              type="radio"
+              name="waveType"
+              value={wave.value}
+              checked={checked}
+              onChange={() => onChange(wave.value)}
+              className="visually-hidden"
+            />
+            <span
+              style={{
+                fontFamily: "var(--font-mono)",
+                fontSize: ".625rem",
+                color: checked ? "var(--accent)" : "var(--text-faint)",
+              }}
+            >
+              {String(i + 1).padStart(2, "0")}
+            </span>
+            {wave.label}
+          </label>
+        )
+      })}
     </div>
-  </div>
+  </fieldset>
 )

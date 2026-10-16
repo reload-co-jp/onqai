@@ -78,7 +78,7 @@ export const ChordProgressionPanel: FC = () => {
       <div>
         <h1
           style={{
-            color: "#f0f0f0",
+            color: "var(--text)",
             fontSize: "clamp(1.75rem, 5vw, 2.4rem)",
             fontWeight: "bold",
             lineHeight: 1.3,
@@ -87,7 +87,13 @@ export const ChordProgressionPanel: FC = () => {
         >
           コード進行の差を聴き比べる
         </h1>
-        <p style={{ color: "#aaa", fontSize: ".9375rem", lineHeight: 1.8 }}>
+        <p
+          style={{
+            color: "var(--text-muted)",
+            fontSize: ".9375rem",
+            lineHeight: 1.8,
+          }}
+        >
           同じCメジャーのキーでも、コードの並べ方（進行）が変わると響きの印象が大きく変わります。
           再生ボタンでそれぞれの進行を聴き、明るさ・切なさ・解決感の違いを比べてみましょう。
         </p>
@@ -104,8 +110,8 @@ export const ChordProgressionPanel: FC = () => {
               style={{
                 padding: "1.25rem",
                 backgroundColor: "var(--surface)",
-                border: `1px solid ${isPlaying ? "var(--accent)" : "#333"}`,
-                borderRadius: ".5rem",
+                border: `1px solid ${isPlaying ? "var(--accent)" : "var(--border)"}`,
+                borderRadius: 0,
               }}
             >
               <div
@@ -120,7 +126,7 @@ export const ChordProgressionPanel: FC = () => {
                 <div>
                   <h2
                     style={{
-                      color: "#f0f0f0",
+                      color: "var(--text)",
                       fontSize: "1.125rem",
                       fontWeight: "bold",
                     }}
@@ -142,10 +148,12 @@ export const ChordProgressionPanel: FC = () => {
                   disabled={isBusy}
                   style={{
                     padding: ".5rem 1.25rem",
-                    borderRadius: ".375rem",
+                    borderRadius: 0,
                     border: "none",
-                    backgroundColor: isBusy ? "#444" : "var(--accent)",
-                    color: "#fff",
+                    backgroundColor: isBusy
+                      ? "var(--text-faint)"
+                      : "var(--accent)",
+                    color: "var(--paper)",
                     fontWeight: "bold",
                     fontSize: ".875rem",
                     cursor: isBusy ? "default" : "pointer",
@@ -157,7 +165,7 @@ export const ChordProgressionPanel: FC = () => {
 
               <p
                 style={{
-                  color: "#bbb",
+                  color: "var(--text-muted)",
                   fontSize: ".9375rem",
                   lineHeight: 1.7,
                   margin: "1rem 0",
@@ -174,12 +182,14 @@ export const ChordProgressionPanel: FC = () => {
                       key={index}
                       style={{
                         padding: ".375rem .75rem",
-                        borderRadius: ".375rem",
+                        borderRadius: 0,
                         fontSize: ".9375rem",
                         fontWeight: "bold",
-                        color: isActive ? "#fff" : "#ccc",
-                        backgroundColor: isActive ? "var(--accent)" : "#2a2a2a",
-                        border: "1px solid #444",
+                        color: isActive ? "var(--paper)" : "var(--text-muted)",
+                        backgroundColor: isActive
+                          ? "var(--accent)"
+                          : "var(--surface)",
+                        border: "1px solid var(--border)",
                         transition: "background-color .1s, color .1s",
                       }}
                     >

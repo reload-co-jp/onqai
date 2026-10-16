@@ -25,18 +25,21 @@ export const WaveVisualizer: FC<Props> = ({ isPlaying }) => {
     const W = rect.width
     const H = rect.height
     const centerY = H / 2
+    const css = getComputedStyle(canvas)
+    const ink = css.getPropertyValue("--text").trim() || "#1b1a18"
+    const accent = css.getPropertyValue("--accent").trim() || "#e8380d"
+    const grid = css.getPropertyValue("--border").trim() || "#c4bdaf"
 
     const draw = () => {
       rafRef.current = requestAnimationFrame(draw)
 
       ctx.clearRect(0, 0, W, H)
-      ctx.fillStyle = "#111827"
-      ctx.fillRect(0, 0, W, H)
+      drawGrid(ctx, W, H, grid)
 
       const analyser = getAnalyser()
 
       if (!analyser) {
-        drawFlatLine(ctx, W, H, centerY, 0.25)
+        drawFlatLine(ctx, W, centerY, ink)
         return
       }
 
@@ -46,14 +49,12 @@ export const WaveVisualizer: FC<Props> = ({ isPlaying }) => {
 
       const isSilent = dataArray.every((v) => v === 128)
       if (isSilent) {
-        drawFlatLine(ctx, W, H, centerY, 0.25)
+        drawFlatLine(ctx, W, centerY, ink)
         return
       }
 
-      ctx.lineWidth = 2
-      ctx.strokeStyle = "#8b7bff"
-      ctx.shadowBlur = 12
-      ctx.shadowColor = "#8b7bff"
+      ctx.lineWidth = 1.5
+      ctx.strokeStyle = accent
       ctx.beginPath()
 
       const sliceWidth = W / bufferLength
@@ -73,7 +74,6 @@ export const WaveVisualizer: FC<Props> = ({ isPlaying }) => {
 
       ctx.lineTo(W, centerY)
       ctx.stroke()
-      ctx.shadowBlur = 0
     }
 
     draw()
@@ -88,8 +88,8 @@ export const WaveVisualizer: FC<Props> = ({ isPlaying }) => {
       style={{
         width: "100%",
         height: "5rem",
-        borderRadius: ".5rem",
-        border: `1px solid ${isPlaying ? "var(--accent)" : "#333"}`,
+        background: "var(--paper)",
+        border: `1px solid ${isPlaying ? "var(--accent)" : "var(--rule)"}`,
         display: "block",
         transition: "border-color 0.3s",
       }}
@@ -97,16 +97,36 @@ export const WaveVisualizer: FC<Props> = ({ isPlaying }) => {
   )
 }
 
-function drawFlatLine(
+// オシロスコープ風の目盛り
+function drawGrid(
   ctx: CanvasRenderingContext2D,
   W: number,
   H: number,
-  centerY: number,
-  opacity: number
+  color: string
 ) {
-  ctx.globalAlpha = opacity
+  ctx.lineWidth = 0.5
+  ctx.strokeStyle = color
+  ctx.beginPath()
+  for (let x = 0; x <= W; x += W / 16) {
+    ctx.moveTo(x, 0)
+    ctx.lineTo(x, H)
+  }
+  ctx.moveTo(0, H / 4)
+  ctx.lineTo(W, H / 4)
+  ctx.moveTo(0, (H * 3) / 4)
+  ctx.lineTo(W, (H * 3) / 4)
+  ctx.stroke()
+}
+
+function drawFlatLine(
+  ctx: CanvasRenderingContext2D,
+  W: number,
+  centerY: number,
+  color: string
+) {
+  ctx.globalAlpha = 0.5
   ctx.lineWidth = 1
-  ctx.strokeStyle = "#8b7bff"
+  ctx.strokeStyle = color
   ctx.setLineDash([4, 8])
   ctx.beginPath()
   ctx.moveTo(0, centerY)

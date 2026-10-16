@@ -342,10 +342,10 @@ export const KimigayoVocalPanel: FC = () => {
       <div
         style={{
           padding: "1rem",
-          backgroundColor: "#111",
-          border: "1px solid #2a2a2a",
-          borderRadius: ".5rem",
-          color: "#aaa",
+          backgroundColor: "var(--surface)",
+          border: "1px solid var(--border)",
+          borderRadius: 0,
+          color: "var(--text-muted)",
           lineHeight: 1.8,
         }}
       >
@@ -358,10 +358,10 @@ export const KimigayoVocalPanel: FC = () => {
           disabled={isPlayingReference}
           style={{
             padding: ".75rem 1.25rem",
-            borderRadius: ".5rem",
-            border: "1px solid #555",
+            borderRadius: 0,
+            border: "1px solid var(--border)",
             backgroundColor: "transparent",
-            color: "#f0f0f0",
+            color: "var(--text)",
             cursor: isPlayingReference ? "not-allowed" : "pointer",
             fontSize: ".95rem",
           }}
@@ -372,10 +372,10 @@ export const KimigayoVocalPanel: FC = () => {
           onClick={handleReset}
           style={{
             padding: ".75rem 1rem",
-            borderRadius: ".5rem",
-            border: "1px solid #555",
+            borderRadius: 0,
+            border: "1px solid var(--border)",
             backgroundColor: "transparent",
-            color: "#888",
+            color: "var(--text-muted)",
             cursor: "pointer",
             fontSize: ".9rem",
             marginLeft: "auto",
@@ -390,8 +390,8 @@ export const KimigayoVocalPanel: FC = () => {
           style={{
             padding: "2rem 1.5rem",
             backgroundColor: "var(--surface)",
-            border: "1px solid #2d2460",
-            borderRadius: ".75rem",
+            border: "1px solid var(--border)",
+            borderRadius: 0,
             textAlign: "center",
           }}
         >
@@ -410,20 +410,24 @@ export const KimigayoVocalPanel: FC = () => {
             style={{
               fontSize: "4rem",
               fontWeight: "bold",
-              color: "#f0f0f0",
+              color: "var(--text)",
               lineHeight: 1,
             }}
           >
             {currentNote.label}
           </p>
           <p
-            style={{ color: "#aaa", fontSize: "1.25rem", marginTop: ".25rem" }}
+            style={{
+              color: "var(--text-muted)",
+              fontSize: "1.25rem",
+              marginTop: ".25rem",
+            }}
           >
             {currentNote.solfege}
           </p>
           <p
             style={{
-              color: "#f0f0f0",
+              color: "var(--text)",
               fontSize: "1.35rem",
               fontWeight: 700,
               marginTop: ".35rem",
@@ -432,7 +436,11 @@ export const KimigayoVocalPanel: FC = () => {
             歌詞: {currentLyric}
           </p>
           <p
-            style={{ color: "#666", fontSize: ".875rem", marginTop: ".25rem" }}
+            style={{
+              color: "var(--text-faint)",
+              fontSize: ".875rem",
+              marginTop: ".25rem",
+            }}
           >
             {currentNote.frequency}Hz
           </p>
@@ -441,10 +449,10 @@ export const KimigayoVocalPanel: FC = () => {
             style={{
               marginTop: "1rem",
               padding: ".5rem 1.25rem",
-              border: "1px solid #555",
-              borderRadius: ".375rem",
+              border: "1px solid var(--border)",
+              borderRadius: 0,
               backgroundColor: "transparent",
-              color: "#aaa",
+              color: "var(--text-muted)",
               cursor: "pointer",
               fontSize: ".875rem",
             }}
@@ -462,9 +470,9 @@ export const KimigayoVocalPanel: FC = () => {
             style={{
               position: "relative",
               height: "3rem",
-              backgroundColor: "#111",
-              border: "1px solid #333",
-              borderRadius: ".5rem",
+              backgroundColor: "var(--surface)",
+              border: "1px solid var(--border)",
+              borderRadius: 0,
               overflow: "hidden",
             }}
           >
@@ -511,7 +519,7 @@ export const KimigayoVocalPanel: FC = () => {
                 top: "50%",
                 transform: "translateY(-50%)",
                 fontSize: ".7rem",
-                color: "#555",
+                color: "var(--text-faint)",
               }}
             >
               低
@@ -523,7 +531,7 @@ export const KimigayoVocalPanel: FC = () => {
                 top: "50%",
                 transform: "translateY(-50%)",
                 fontSize: ".7rem",
-                color: "#555",
+                color: "var(--text-faint)",
               }}
             >
               高
@@ -537,19 +545,19 @@ export const KimigayoVocalPanel: FC = () => {
               alignItems: "center",
               gap: ".75rem",
               padding: ".75rem 1rem",
-              backgroundColor: "#111",
-              border: "1px solid #2a2a2a",
-              borderRadius: ".5rem",
+              backgroundColor: "var(--surface)",
+              border: "1px solid var(--border)",
+              borderRadius: 0,
               fontSize: ".9rem",
             }}
           >
-            <span style={{ color: "#666" }}>検出</span>
+            <span style={{ color: "var(--text-faint)" }}>検出</span>
             {detectedFreq ? (
-              <span style={{ color: "#f0f0f0", fontWeight: "bold" }}>
+              <span style={{ color: "var(--text)", fontWeight: "bold" }}>
                 {detectedLabel} — {detectedFreq}Hz
               </span>
             ) : (
-              <span style={{ color: "#444" }}>音なし</span>
+              <span style={{ color: "var(--text-faint)" }}>音なし</span>
             )}
             {cents !== null && (
               <span
@@ -573,17 +581,17 @@ export const KimigayoVocalPanel: FC = () => {
                   marginBottom: ".25rem",
                 }}
               >
-                <span style={{ fontSize: ".8rem", color: "#4ade80" }}>
+                <span style={{ fontSize: ".8rem", color: "var(--success)" }}>
                   キープ中
                 </span>
-                <span style={{ fontSize: ".8rem", color: "#4ade80" }}>
+                <span style={{ fontSize: ".8rem", color: "var(--success)" }}>
                   {Math.round(holdProgress)}%
                 </span>
               </div>
               <div
                 style={{
                   height: "6px",
-                  backgroundColor: "#1a1a1a",
+                  backgroundColor: "var(--surface)",
                   borderRadius: "3px",
                   overflow: "hidden",
                 }}
@@ -592,7 +600,7 @@ export const KimigayoVocalPanel: FC = () => {
                   style={{
                     height: "100%",
                     width: `${holdProgress}%`,
-                    backgroundColor: "#4ade80",
+                    backgroundColor: "var(--success)",
                     borderRadius: "3px",
                     transition: "width .1s linear",
                   }}
@@ -604,13 +612,25 @@ export const KimigayoVocalPanel: FC = () => {
       )}
 
       {phase === "success" && (
-        <p style={{ color: "#4ade80", fontWeight: 700, textAlign: "center" }}>
+        <p
+          style={{
+            color: "var(--success)",
+            fontWeight: 700,
+            textAlign: "center",
+          }}
+        >
           成功: {currentNote.label}({currentNote.solfege}) / {currentLyric}
         </p>
       )}
 
       {phase === "miss" && (
-        <p style={{ color: "#f87171", fontWeight: 700, textAlign: "center" }}>
+        <p
+          style={{
+            color: "var(--error)",
+            fontWeight: 700,
+            textAlign: "center",
+          }}
+        >
           スキップ: {currentNote.label}({currentNote.solfege}) / {currentLyric}
         </p>
       )}
@@ -620,10 +640,10 @@ export const KimigayoVocalPanel: FC = () => {
           onClick={handleStart}
           style={{
             padding: "1rem",
-            borderRadius: ".5rem",
+            borderRadius: 0,
             border: "none",
             backgroundColor: "var(--accent)",
-            color: "#fff",
+            color: "var(--paper)",
             cursor: "pointer",
             fontSize: "1rem",
             fontWeight: "bold",
@@ -638,10 +658,10 @@ export const KimigayoVocalPanel: FC = () => {
           onClick={handleSkip}
           style={{
             padding: ".75rem",
-            borderRadius: ".5rem",
-            border: "1px solid #555",
+            borderRadius: 0,
+            border: "1px solid var(--border)",
             backgroundColor: "transparent",
-            color: "#aaa",
+            color: "var(--text-muted)",
             cursor: "pointer",
             fontSize: ".9375rem",
           }}
@@ -655,10 +675,10 @@ export const KimigayoVocalPanel: FC = () => {
           onClick={handleNext}
           style={{
             padding: "1rem",
-            borderRadius: ".5rem",
+            borderRadius: 0,
             border: "none",
             backgroundColor: "var(--accent)",
-            color: "#fff",
+            color: "var(--paper)",
             cursor: "pointer",
             fontSize: "1rem",
             fontWeight: "bold",
@@ -670,7 +690,11 @@ export const KimigayoVocalPanel: FC = () => {
 
       {micError && (
         <p
-          style={{ color: "#f87171", fontSize: ".875rem", textAlign: "center" }}
+          style={{
+            color: "var(--error)",
+            fontSize: ".875rem",
+            textAlign: "center",
+          }}
         >
           {micError}
         </p>
@@ -694,7 +718,7 @@ export const KimigayoVocalPanel: FC = () => {
               style={{
                 minWidth: "1.55rem",
                 minHeight: "2.35rem",
-                borderRadius: ".375rem",
+                borderRadius: 0,
                 display: "inline-flex",
                 flexDirection: "column",
                 alignItems: "center",
@@ -702,7 +726,11 @@ export const KimigayoVocalPanel: FC = () => {
                 gap: ".05rem",
                 fontSize: ".7rem",
                 fontWeight: 700,
-                color: result ? "#111" : active ? "#fff" : "#777",
+                color: result
+                  ? "var(--paper)"
+                  : active
+                    ? "var(--paper)"
+                    : "var(--text-faint)",
                 backgroundColor: result
                   ? result.success
                     ? "#4ade80"
@@ -727,7 +755,7 @@ export const KimigayoVocalPanel: FC = () => {
             padding: "1.5rem",
             backgroundColor: "var(--surface)",
             border: "1px solid var(--accent)",
-            borderRadius: ".75rem",
+            borderRadius: 0,
             textAlign: "center",
           }}
         >
@@ -741,7 +769,11 @@ export const KimigayoVocalPanel: FC = () => {
             RESULT
           </p>
           <p
-            style={{ fontSize: "2.5rem", fontWeight: "bold", color: "#f0f0f0" }}
+            style={{
+              fontSize: "2.5rem",
+              fontWeight: "bold",
+              color: "var(--text)",
+            }}
           >
             {completeCount} / {KIMIGAYO_NOTES.length}
           </p>
@@ -750,10 +782,10 @@ export const KimigayoVocalPanel: FC = () => {
             style={{
               marginTop: "1rem",
               padding: ".75rem 1.5rem",
-              borderRadius: ".5rem",
+              borderRadius: 0,
               border: "none",
               backgroundColor: "var(--accent)",
-              color: "#fff",
+              color: "var(--paper)",
               cursor: "pointer",
               fontSize: ".95rem",
               fontWeight: "bold",

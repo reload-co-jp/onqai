@@ -57,9 +57,9 @@ function createQuestion(): Pick<
 
 const statStyle: React.CSSProperties = {
   padding: ".875rem",
-  border: "1px solid #333",
-  borderRadius: ".5rem",
-  backgroundColor: "#1b1b1b",
+  border: "1px solid var(--border)",
+  borderRadius: 0,
+  backgroundColor: "var(--surface)",
   minWidth: "6rem",
   textAlign: "center",
 }
@@ -174,7 +174,7 @@ export const MelodyGamePanel: FC = () => {
         </p>
         <h1
           style={{
-            color: "#f0f0f0",
+            color: "var(--text)",
             fontSize: "2rem",
             lineHeight: 1.35,
             marginBottom: ".75rem",
@@ -182,7 +182,7 @@ export const MelodyGamePanel: FC = () => {
         >
           童謡・民謡メロディ音階ゲーム
         </h1>
-        <p style={{ color: "#aaa", lineHeight: 1.8 }}>
+        <p style={{ color: "var(--text-muted)", lineHeight: 1.8 }}>
           短いメロディを聴いて、同じドレミ並びを選ぶ練習。
         </p>
       </div>
@@ -196,36 +196,60 @@ export const MelodyGamePanel: FC = () => {
       >
         <div style={statStyle}>
           <div
-            style={{ color: "#888", fontSize: ".8rem", marginBottom: ".35rem" }}
+            style={{
+              color: "var(--text-muted)",
+              fontSize: ".8rem",
+              marginBottom: ".35rem",
+            }}
           >
             正解
           </div>
           <div
-            style={{ color: "#f0f0f0", fontSize: "1.35rem", fontWeight: 700 }}
+            style={{
+              color: "var(--text)",
+              fontSize: "1.35rem",
+              fontWeight: 700,
+            }}
           >
             {state.correctCount}/{state.totalCount}
           </div>
         </div>
         <div style={statStyle}>
           <div
-            style={{ color: "#888", fontSize: ".8rem", marginBottom: ".35rem" }}
+            style={{
+              color: "var(--text-muted)",
+              fontSize: ".8rem",
+              marginBottom: ".35rem",
+            }}
           >
             正答率
           </div>
           <div
-            style={{ color: "#f0f0f0", fontSize: "1.35rem", fontWeight: 700 }}
+            style={{
+              color: "var(--text)",
+              fontSize: "1.35rem",
+              fontWeight: 700,
+            }}
           >
             {accuracy}%
           </div>
         </div>
         <div style={statStyle}>
           <div
-            style={{ color: "#888", fontSize: ".8rem", marginBottom: ".35rem" }}
+            style={{
+              color: "var(--text-muted)",
+              fontSize: ".8rem",
+              marginBottom: ".35rem",
+            }}
           >
             連続
           </div>
           <div
-            style={{ color: "#f0f0f0", fontSize: "1.35rem", fontWeight: 700 }}
+            style={{
+              color: "var(--text)",
+              fontSize: "1.35rem",
+              fontWeight: 700,
+            }}
           >
             {state.streak}
           </div>
@@ -259,10 +283,10 @@ export const MelodyGamePanel: FC = () => {
           disabled={isPlaying}
           style={{
             padding: ".75rem 1.75rem",
-            borderRadius: ".5rem",
+            borderRadius: 0,
             border: "none",
-            backgroundColor: isPlaying ? "#4a4080" : "var(--accent)",
-            color: "#fff",
+            backgroundColor: isPlaying ? "var(--text-faint)" : "var(--accent)",
+            color: "var(--paper)",
             cursor: isPlaying ? "not-allowed" : "pointer",
             fontSize: "1rem",
             fontWeight: 700,
@@ -276,10 +300,10 @@ export const MelodyGamePanel: FC = () => {
             disabled={isPlaying}
             style={{
               padding: ".75rem 1.25rem",
-              borderRadius: ".5rem",
-              border: "1px solid #555",
+              borderRadius: 0,
+              border: "1px solid var(--border)",
               backgroundColor: "transparent",
-              color: "#f0f0f0",
+              color: "var(--text)",
               cursor: isPlaying ? "not-allowed" : "pointer",
               fontSize: "1rem",
             }}
@@ -291,10 +315,10 @@ export const MelodyGamePanel: FC = () => {
           onClick={handleReset}
           style={{
             padding: ".75rem 1rem",
-            borderRadius: ".5rem",
-            border: "1px solid #555",
+            borderRadius: 0,
+            border: "1px solid var(--border)",
             backgroundColor: "transparent",
-            color: "#888",
+            color: "var(--text-muted)",
             cursor: "pointer",
             fontSize: ".875rem",
             marginLeft: "auto",
@@ -308,7 +332,7 @@ export const MelodyGamePanel: FC = () => {
         <div
           style={{ display: "flex", flexDirection: "column", gap: ".75rem" }}
         >
-          <h2 style={{ color: "#f0f0f0", fontSize: "1rem" }}>音階を選ぶ</h2>
+          <h2 style={{ color: "var(--text)", fontSize: "1rem" }}>音階を選ぶ</h2>
           <div
             style={{
               display: "grid",
@@ -330,14 +354,14 @@ export const MelodyGamePanel: FC = () => {
                   style={{
                     minHeight: "5.75rem",
                     padding: "1rem",
-                    borderRadius: ".5rem",
-                    border: `1px solid ${isCorrect ? "#31c48d" : isWrong ? "#f05252" : "#444"}`,
+                    borderRadius: 0,
+                    border: `1px solid ${isCorrect ? "var(--success)" : isWrong ? "var(--error)" : "var(--border)"}`,
                     backgroundColor: isCorrect
                       ? "#12382d"
                       : isWrong
                         ? "#3c1b1b"
                         : "#1b1b1b",
-                    color: "#f0f0f0",
+                    color: "var(--text)",
                     cursor: state.result === null ? "pointer" : "default",
                     textAlign: "left",
                   }}
@@ -355,7 +379,7 @@ export const MelodyGamePanel: FC = () => {
                   {state.result !== null && (
                     <span
                       style={{
-                        color: "#999",
+                        color: "var(--text-muted)",
                         display: "block",
                         fontSize: ".85rem",
                         marginTop: ".35rem",
@@ -372,7 +396,10 @@ export const MelodyGamePanel: FC = () => {
           {state.result && (
             <p
               style={{
-                color: state.result === "correct" ? "#31c48d" : "#f05252",
+                color:
+                  state.result === "correct"
+                    ? "var(--success)"
+                    : "var(--error)",
                 fontWeight: 700,
                 lineHeight: 1.7,
               }}

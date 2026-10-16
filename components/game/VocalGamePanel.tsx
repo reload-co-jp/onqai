@@ -225,8 +225,8 @@ export const VocalGamePanel: FC = () => {
           style={{
             padding: "2rem 1.5rem",
             backgroundColor: "var(--surface)",
-            border: "1px solid #2d2460",
-            borderRadius: ".75rem",
+            border: "1px solid var(--border)",
+            borderRadius: 0,
             textAlign: "center",
           }}
         >
@@ -244,19 +244,27 @@ export const VocalGamePanel: FC = () => {
             style={{
               fontSize: "4rem",
               fontWeight: "bold",
-              color: "#f0f0f0",
+              color: "var(--text)",
               lineHeight: 1,
             }}
           >
             {targetNote.label}
           </p>
           <p
-            style={{ color: "#aaa", fontSize: "1.25rem", marginTop: ".25rem" }}
+            style={{
+              color: "var(--text-muted)",
+              fontSize: "1.25rem",
+              marginTop: ".25rem",
+            }}
           >
             {targetNote.solfege}
           </p>
           <p
-            style={{ color: "#666", fontSize: ".875rem", marginTop: ".25rem" }}
+            style={{
+              color: "var(--text-faint)",
+              fontSize: ".875rem",
+              marginTop: ".25rem",
+            }}
           >
             {targetNote.frequency}Hz
           </p>
@@ -265,10 +273,10 @@ export const VocalGamePanel: FC = () => {
             style={{
               marginTop: "1rem",
               padding: ".5rem 1.25rem",
-              border: "1px solid #555",
-              borderRadius: ".375rem",
+              border: "1px solid var(--border)",
+              borderRadius: 0,
               backgroundColor: "transparent",
-              color: "#aaa",
+              color: "var(--text-muted)",
               cursor: "pointer",
               fontSize: ".875rem",
             }}
@@ -287,9 +295,9 @@ export const VocalGamePanel: FC = () => {
             style={{
               position: "relative",
               height: "3rem",
-              backgroundColor: "#111",
-              border: "1px solid #333",
-              borderRadius: ".5rem",
+              backgroundColor: "var(--surface)",
+              border: "1px solid var(--border)",
+              borderRadius: 0,
               overflow: "hidden",
             }}
           >
@@ -340,7 +348,7 @@ export const VocalGamePanel: FC = () => {
                 top: "50%",
                 transform: "translateY(-50%)",
                 fontSize: ".7rem",
-                color: "#555",
+                color: "var(--text-faint)",
               }}
             >
               低
@@ -352,7 +360,7 @@ export const VocalGamePanel: FC = () => {
                 top: "50%",
                 transform: "translateY(-50%)",
                 fontSize: ".7rem",
-                color: "#555",
+                color: "var(--text-faint)",
               }}
             >
               高
@@ -366,19 +374,21 @@ export const VocalGamePanel: FC = () => {
               justifyContent: "space-between",
               alignItems: "center",
               padding: ".75rem 1rem",
-              backgroundColor: "#111",
-              border: "1px solid #2a2a2a",
-              borderRadius: ".5rem",
+              backgroundColor: "var(--surface)",
+              border: "1px solid var(--border)",
+              borderRadius: 0,
               fontSize: ".9rem",
             }}
           >
-            <span style={{ color: "#666" }}>検出</span>
+            <span style={{ color: "var(--text-faint)" }}>検出</span>
             {detectedFreq ? (
-              <span style={{ color: "#f0f0f0", fontWeight: "bold" }}>
+              <span style={{ color: "var(--text)", fontWeight: "bold" }}>
                 {detectedLabel} — {detectedFreq}Hz
               </span>
             ) : (
-              <span style={{ color: "#444" }}>音が検出されていません</span>
+              <span style={{ color: "var(--text-faint)" }}>
+                音が検出されていません
+              </span>
             )}
             {cents !== null && (
               <span
@@ -403,17 +413,17 @@ export const VocalGamePanel: FC = () => {
                   marginBottom: ".25rem",
                 }}
               >
-                <span style={{ fontSize: ".8rem", color: "#4ade80" }}>
+                <span style={{ fontSize: ".8rem", color: "var(--success)" }}>
                   キープ中...
                 </span>
-                <span style={{ fontSize: ".8rem", color: "#4ade80" }}>
+                <span style={{ fontSize: ".8rem", color: "var(--success)" }}>
                   {Math.round(holdProgress)}%
                 </span>
               </div>
               <div
                 style={{
                   height: "6px",
-                  backgroundColor: "#1a1a1a",
+                  backgroundColor: "var(--surface)",
                   borderRadius: "3px",
                   overflow: "hidden",
                 }}
@@ -422,7 +432,7 @@ export const VocalGamePanel: FC = () => {
                   style={{
                     height: "100%",
                     width: `${holdProgress}%`,
-                    backgroundColor: "#4ade80",
+                    backgroundColor: "var(--success)",
                     borderRadius: "3px",
                     transition: "width .1s linear",
                   }}
@@ -439,18 +449,26 @@ export const VocalGamePanel: FC = () => {
           style={{
             padding: "1.25rem",
             backgroundColor: "#14532d22",
-            border: "1px solid #4ade80",
-            borderRadius: ".5rem",
+            border: "1px solid var(--success)",
+            borderRadius: 0,
             textAlign: "center",
           }}
         >
           <p
-            style={{ fontSize: "1.5rem", fontWeight: "bold", color: "#4ade80" }}
+            style={{
+              fontSize: "1.5rem",
+              fontWeight: "bold",
+              color: "var(--success)",
+            }}
           >
             成功!
           </p>
           <p
-            style={{ color: "#aaa", fontSize: ".875rem", marginTop: ".25rem" }}
+            style={{
+              color: "var(--text-muted)",
+              fontSize: ".875rem",
+              marginTop: ".25rem",
+            }}
           >
             {targetNote?.label}({targetNote?.solfege}) を正確に歌えた
           </p>
@@ -462,18 +480,26 @@ export const VocalGamePanel: FC = () => {
           style={{
             padding: "1.25rem",
             backgroundColor: "#7f1d1d22",
-            border: "1px solid #f87171",
-            borderRadius: ".5rem",
+            border: "1px solid var(--error)",
+            borderRadius: 0,
             textAlign: "center",
           }}
         >
           <p
-            style={{ fontSize: "1.5rem", fontWeight: "bold", color: "#f87171" }}
+            style={{
+              fontSize: "1.5rem",
+              fontWeight: "bold",
+              color: "var(--error)",
+            }}
           >
             スキップ
           </p>
           <p
-            style={{ color: "#aaa", fontSize: ".875rem", marginTop: ".25rem" }}
+            style={{
+              color: "var(--text-muted)",
+              fontSize: ".875rem",
+              marginTop: ".25rem",
+            }}
           >
             正解は {targetNote?.label}({targetNote?.solfege}) —{" "}
             {targetNote?.frequency}Hz
@@ -487,10 +513,10 @@ export const VocalGamePanel: FC = () => {
           onClick={handleStart}
           style={{
             padding: "1rem",
-            borderRadius: ".5rem",
+            borderRadius: 0,
             border: "none",
             backgroundColor: "var(--accent)",
-            color: "#fff",
+            color: "var(--paper)",
             cursor: "pointer",
             fontSize: "1rem",
             fontWeight: "bold",
@@ -507,10 +533,10 @@ export const VocalGamePanel: FC = () => {
             style={{
               flex: 1,
               padding: ".75rem",
-              borderRadius: ".5rem",
-              border: "1px solid #555",
+              borderRadius: 0,
+              border: "1px solid var(--border)",
               backgroundColor: "transparent",
-              color: "#aaa",
+              color: "var(--text-muted)",
               cursor: "pointer",
               fontSize: ".9375rem",
             }}
@@ -525,10 +551,10 @@ export const VocalGamePanel: FC = () => {
           onClick={handleNext}
           style={{
             padding: "1rem",
-            borderRadius: ".5rem",
+            borderRadius: 0,
             border: "none",
             backgroundColor: "var(--accent)",
-            color: "#fff",
+            color: "var(--paper)",
             cursor: "pointer",
             fontSize: "1rem",
             fontWeight: "bold",
@@ -569,7 +595,11 @@ export const VocalGamePanel: FC = () => {
       {/* Error */}
       {micError && (
         <p
-          style={{ color: "#f87171", fontSize: ".875rem", textAlign: "center" }}
+          style={{
+            color: "var(--error)",
+            fontSize: ".875rem",
+            textAlign: "center",
+          }}
         >
           {micError}
         </p>
@@ -585,7 +615,7 @@ export const VocalGamePanel: FC = () => {
             padding: "1.5rem",
             backgroundColor: "var(--surface)",
             border: "1px solid var(--accent)",
-            borderRadius: ".75rem",
+            borderRadius: 0,
             textAlign: "center",
           }}
         >
@@ -599,7 +629,11 @@ export const VocalGamePanel: FC = () => {
             RESULT
           </p>
           <p
-            style={{ fontSize: "2.5rem", fontWeight: "bold", color: "#f0f0f0" }}
+            style={{
+              fontSize: "2.5rem",
+              fontWeight: "bold",
+              color: "var(--text)",
+            }}
           >
             {correctCount} / {GAME_ROUNDS}
           </p>
@@ -621,10 +655,12 @@ export const VocalGamePanel: FC = () => {
                     width: "12px",
                     height: "12px",
                     borderRadius: "50%",
-                    backgroundColor: r.success ? "#4ade80" : "#f87171",
+                    backgroundColor: r.success
+                      ? "var(--success)"
+                      : "var(--error)",
                   }}
                 />
-                <span style={{ fontSize: ".7rem", color: "#666" }}>
+                <span style={{ fontSize: ".7rem", color: "var(--text-faint)" }}>
                   {r.note.label}
                 </span>
               </div>
@@ -634,10 +670,10 @@ export const VocalGamePanel: FC = () => {
             onClick={handleReset}
             style={{
               padding: ".75rem 2rem",
-              borderRadius: ".5rem",
+              borderRadius: 0,
               border: "none",
               backgroundColor: "var(--accent)",
-              color: "#fff",
+              color: "var(--paper)",
               cursor: "pointer",
               fontSize: "1rem",
               fontWeight: "bold",

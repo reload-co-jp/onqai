@@ -38,7 +38,7 @@ export const NotePreviewPanel: FC = () => {
       <div>
         <h1
           style={{
-            color: "#f0f0f0",
+            color: "var(--text)",
             fontSize: "clamp(1.75rem, 5vw, 2.4rem)",
             fontWeight: "bold",
             lineHeight: 1.3,
@@ -47,7 +47,13 @@ export const NotePreviewPanel: FC = () => {
         >
           音を確認する
         </h1>
-        <p style={{ color: "#aaa", fontSize: ".9375rem", lineHeight: 1.8 }}>
+        <p
+          style={{
+            color: "var(--text-muted)",
+            fontSize: ".9375rem",
+            lineHeight: 1.8,
+          }}
+        >
           鍵盤を押すと、その音だけを再生できます。問題とは別に音の高さを確認できます。
         </p>
       </div>
@@ -65,8 +71,8 @@ export const NotePreviewPanel: FC = () => {
           gap: ".75rem",
           padding: "1rem",
           backgroundColor: "var(--surface)",
-          border: "1px solid #333",
-          borderRadius: ".5rem",
+          border: "1px solid var(--border)",
+          borderRadius: 0,
         }}
       >
         <PianoKeyboard

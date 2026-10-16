@@ -18,34 +18,67 @@ type Props = {
 }
 
 export const DifficultySelector: FC<Props> = ({ value, onChange }) => (
-  <div>
-    <p style={{ fontSize: ".875rem", marginBottom: ".5rem", color: "#aaa" }}>
-      難易度
+  <div role="group" aria-labelledby="difficulty-label">
+    <p
+      id="difficulty-label"
+      className="mono"
+      style={{
+        color: "var(--text-muted)",
+        borderBottom: "1px solid var(--rule)",
+        paddingBottom: ".375rem",
+        marginBottom: ".5rem",
+      }}
+    >
+      Level / 難易度
     </p>
-    <div style={{ display: "flex", gap: ".5rem", flexWrap: "wrap" }}>
-      {DIFFICULTIES.map((diff) => (
-        <button
-          key={diff.value}
-          onClick={() => onChange(diff.value)}
-          aria-pressed={value === diff.value}
-          style={{
-            padding: ".375rem .75rem",
-            borderRadius: ".375rem",
-            border: `1px solid ${value === diff.value ? "var(--accent)" : "#555"}`,
-            backgroundColor: value === diff.value ? "#2d2460" : "transparent",
-            color: "#f0f0f0",
-            cursor: "pointer",
-            fontSize: ".875rem",
-          }}
-        >
-          {diff.label}
-          <span
-            style={{ fontSize: ".75rem", color: "#aaa", marginLeft: ".375rem" }}
+    <div style={{ display: "flex", flexDirection: "column", gap: ".375rem" }}>
+      {DIFFICULTIES.map((diff, i) => {
+        const active = value === diff.value
+        return (
+          <button
+            key={diff.value}
+            onClick={() => onChange(diff.value)}
+            aria-pressed={active}
+            style={{
+              display: "flex",
+              alignItems: "baseline",
+              gap: ".75rem",
+              textAlign: "left",
+              padding: ".625rem .75rem",
+              minHeight: "2.75rem",
+              borderRadius: 0,
+              border: `1px solid ${active ? "var(--rule)" : "var(--border)"}`,
+              backgroundColor: active ? "var(--text)" : "var(--paper)",
+              color: active ? "var(--paper)" : "var(--text)",
+              fontSize: ".9375rem",
+              fontWeight: 700,
+            }}
           >
-            {diff.description}
-          </span>
-        </button>
-      ))}
+            <span
+              style={{
+                fontFamily: "var(--font-mono)",
+                fontSize: ".6875rem",
+                fontWeight: 400,
+                color: active ? "var(--accent)" : "var(--text-faint)",
+              }}
+            >
+              Lv.{i + 1}
+            </span>
+            {diff.label}
+            <span
+              style={{
+                fontSize: ".75rem",
+                fontWeight: 400,
+                color: active ? "var(--paper)" : "var(--text-muted)",
+                opacity: active ? 0.75 : 1,
+                marginLeft: "auto",
+              }}
+            >
+              {diff.description}
+            </span>
+          </button>
+        )
+      })}
     </div>
   </div>
 )

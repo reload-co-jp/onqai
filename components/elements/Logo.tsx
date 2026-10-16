@@ -1,51 +1,54 @@
+import Link from "next/link"
 import { FC } from "react"
 
 export const Logo: FC = () => (
-  <div style={{ display: "flex", alignItems: "center", gap: ".625rem" }}>
-    <svg
-      width="26"
-      height="20"
-      viewBox="0 0 28 20"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
-    >
-      <defs>
-        <linearGradient
-          id="logo-grad"
-          x1="0"
-          y1="0"
-          x2="28"
-          y2="20"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop stopColor="#8b7bff" />
-          <stop offset="1" stopColor="#ff7ac6" />
-        </linearGradient>
-      </defs>
-      <rect x="0" y="5" width="4" height="10" rx="2" fill="url(#logo-grad)" />
-      <rect x="6" y="0" width="4" height="20" rx="2" fill="url(#logo-grad)" />
-      <rect
-        x="12"
-        y="7"
-        width="4"
-        height="8"
-        rx="2"
-        fill="url(#logo-grad)"
+  <Link
+    href="/"
+    aria-label="ONQAI 音当てゲーム ホーム"
+    style={{
+      display: "flex",
+      alignItems: "center",
+      gap: ".625rem",
+      textDecoration: "none",
+    }}
+  >
+    {/* レコード盤を思わせる朱の円 */}
+    <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true">
+      <circle cx="11" cy="11" r="11" style={{ fill: "var(--accent)" }} />
+      <circle
+        cx="11"
+        cy="11"
+        r="7"
+        fill="none"
+        style={{ stroke: "var(--paper)" }}
+        strokeWidth=".75"
         opacity=".6"
       />
-      <rect x="18" y="2" width="4" height="16" rx="2" fill="url(#logo-grad)" />
-      <rect x="24" y="5" width="4" height="11" rx="2" fill="url(#logo-grad)" />
+      <circle cx="11" cy="11" r="2.25" style={{ fill: "var(--paper)" }} />
     </svg>
     <span
-      className="gradient-text"
       style={{
-        fontSize: "1rem",
-        fontWeight: "bold",
-        letterSpacing: ".04em",
+        fontSize: "1.25rem",
+        fontWeight: 900,
+        letterSpacing: ".02em",
+        lineHeight: 1,
       }}
     >
-      音当てゲーム
+      ONQAI
     </span>
-  </div>
+    <span
+      className="mono logo-sub"
+      style={{
+        fontSize: ".625rem",
+        color: "var(--text-muted)",
+        borderLeft: "1px solid var(--rule)",
+        paddingLeft: ".625rem",
+        lineHeight: 1.3,
+      }}
+    >
+      音当て
+      <br />
+      Ear Lab
+    </span>
+  </Link>
 )

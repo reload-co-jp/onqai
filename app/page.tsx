@@ -2,6 +2,8 @@ import { FC } from "react"
 import type { Metadata } from "next"
 import { Hero } from "components/sections/Hero"
 import { GamePanel } from "components/game/GamePanel"
+import { Catalog } from "components/sections/Catalog"
+import { AboutTeaser } from "components/sections/AboutTeaser"
 
 const siteUrl = "https://onqai.reload.co.jp"
 const description =
@@ -55,6 +57,8 @@ const Page: FC = () => (
     />
     <Hero />
     <GamePanel />
+    <Catalog />
+    <AboutTeaser />
   </>
 )
 

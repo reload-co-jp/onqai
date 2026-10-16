@@ -51,13 +51,13 @@ const courseJsonLd = {
 
 const body: React.CSSProperties = {
   fontSize: "1rem",
-  color: "#ccc",
+  color: "var(--text-muted)",
   lineHeight: 1.9,
   margin: "0 0 1rem",
 }
 
 const strong: React.CSSProperties = {
-  color: "#f0f0f0",
+  color: "var(--text)",
   fontWeight: "700",
 }
 
@@ -65,12 +65,14 @@ const Section: FC<{ title: string; children: React.ReactNode }> = ({
   title,
   children,
 }) => (
-  <section style={{ padding: "2rem 0", borderBottom: "1px solid #2a2a2a" }}>
+  <section
+    style={{ padding: "2rem 0", borderBottom: "1px solid var(--border)" }}
+  >
     <h2
       style={{
         fontSize: "1.35rem",
         fontWeight: "bold",
-        color: "#a89af5",
+        color: "var(--accent)",
         marginBottom: "1rem",
       }}
     >
@@ -92,8 +94,8 @@ const Step: FC<{ number: string; title: string; text: string }> = ({
       gap: "1rem",
       padding: "1rem",
       backgroundColor: "var(--surface)",
-      border: "1px solid #2d2460",
-      borderRadius: ".5rem",
+      border: "1px solid var(--border)",
+      borderRadius: 0,
     }}
   >
     <span
@@ -108,7 +110,7 @@ const Step: FC<{ number: string; title: string; text: string }> = ({
     <div>
       <h3
         style={{
-          color: "#f0f0f0",
+          color: "var(--text)",
           fontSize: "1rem",
           fontWeight: "bold",
           marginBottom: ".375rem",
@@ -116,7 +118,13 @@ const Step: FC<{ number: string; title: string; text: string }> = ({
       >
         {title}
       </h3>
-      <p style={{ color: "#bbb", fontSize: ".9375rem", lineHeight: 1.7 }}>
+      <p
+        style={{
+          color: "var(--text-muted)",
+          fontSize: ".9375rem",
+          lineHeight: 1.7,
+        }}
+      >
         {text}
       </p>
     </div>
@@ -147,7 +155,7 @@ const Page: FC = () => (
         style={{
           fontSize: "clamp(1.75rem, 5vw, 2.6rem)",
           fontWeight: "bold",
-          color: "#f0f0f0",
+          color: "var(--text)",
           lineHeight: 1.3,
           marginBottom: "1rem",
         }}
@@ -155,7 +163,12 @@ const Page: FC = () => (
         音当てがうまくなる講座
       </h1>
       <p
-        style={{ ...body, maxWidth: "560px", margin: "0 auto", color: "#aaa" }}
+        style={{
+          ...body,
+          maxWidth: "560px",
+          margin: "0 auto",
+          color: "var(--text-muted)",
+        }}
       >
         音当ては勘で当てるゲームではありません。
         <span style={strong}>音の高さを比べる順番</span>
@@ -240,13 +253,13 @@ const Page: FC = () => (
             style={{
               padding: "1rem",
               backgroundColor: "var(--surface)",
-              border: "1px solid #333",
-              borderRadius: ".5rem",
+              border: "1px solid var(--border)",
+              borderRadius: 0,
             }}
           >
             <h3
               style={{
-                color: "#f0f0f0",
+                color: "var(--text)",
                 fontSize: "1rem",
                 fontWeight: "bold",
                 marginBottom: ".375rem",
@@ -254,7 +267,13 @@ const Page: FC = () => (
             >
               {title}
             </h3>
-            <p style={{ color: "#bbb", lineHeight: 1.7, fontSize: ".9375rem" }}>
+            <p
+              style={{
+                color: "var(--text-muted)",
+                lineHeight: 1.7,
+                fontSize: ".9375rem",
+              }}
+            >
               {text}
             </p>
           </div>
@@ -263,7 +282,13 @@ const Page: FC = () => (
     </Section>
 
     <Section title="7日間の練習メニュー">
-      <ol style={{ color: "#ccc", lineHeight: 1.9, paddingLeft: "1.25rem" }}>
+      <ol
+        style={{
+          color: "var(--text-muted)",
+          lineHeight: 1.9,
+          paddingLeft: "1.25rem",
+        }}
+      >
         <li>1日目: 初級でC・D・Eの高さの違いに慣れる</li>
         <li>2日目: 初級を10問解き、外れた音が上か下か確認する</li>
         <li>3日目: 初級で正答率70%を目指す</li>
@@ -280,13 +305,13 @@ const Page: FC = () => (
         textAlign: "center",
         padding: "2rem 1rem",
         backgroundColor: "var(--surface)",
-        borderRadius: ".5rem",
-        border: "1px solid #2d2460",
+        borderRadius: 0,
+        border: "1px solid var(--border)",
       }}
     >
       <p
         style={{
-          color: "#f0f0f0",
+          color: "var(--text)",
           fontSize: "1.125rem",
           fontWeight: "bold",
           marginBottom: ".5rem",
@@ -294,7 +319,13 @@ const Page: FC = () => (
       >
         講座を読みながら練習しよう
       </p>
-      <p style={{ color: "#888", fontSize: ".875rem", marginBottom: "1.5rem" }}>
+      <p
+        style={{
+          color: "var(--text-muted)",
+          fontSize: ".875rem",
+          marginBottom: "1.5rem",
+        }}
+      >
         まずは初級で5問だけ。耳に「比べ方」を覚えさせます。
       </p>
       <Link
@@ -302,9 +333,9 @@ const Page: FC = () => (
         style={{
           display: "inline-block",
           padding: ".75rem 2.5rem",
-          borderRadius: ".5rem",
+          borderRadius: 0,
           backgroundColor: "var(--accent)",
-          color: "#fff",
+          color: "var(--paper)",
           textDecoration: "none",
           fontWeight: "bold",
           fontSize: "1rem",

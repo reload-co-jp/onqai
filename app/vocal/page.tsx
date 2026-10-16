@@ -36,7 +36,7 @@ export const metadata: Metadata = {
 
 const Page: FC = () => (
   <div style={{ paddingTop: "clamp(2.5rem, 6vw, 6rem)" }}>
-    <div style={{ textAlign: "center", marginBottom: "2rem" }}>
+    <div style={{ marginBottom: "2rem", padding: "0 var(--gutter)" }}>
       <p
         style={{
           fontSize: ".8rem",
@@ -53,7 +53,7 @@ const Page: FC = () => (
         style={{
           fontSize: "clamp(1.5rem, 5vw, 2.25rem)",
           fontWeight: "bold",
-          color: "#f0f0f0",
+          color: "var(--text)",
           lineHeight: 1.3,
           marginBottom: ".75rem",
         }}
@@ -62,7 +62,7 @@ const Page: FC = () => (
       </h1>
       <p
         style={{
-          color: "#aaa",
+          color: "var(--text-muted)",
           fontSize: ".9375rem",
           maxWidth: "440px",
           margin: "0 auto",

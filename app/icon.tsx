@@ -15,7 +15,7 @@ export default function Icon() {
         justifyContent: "center",
         gap: 2,
         paddingBottom: 5,
-        backgroundColor: "#1a1a2e",
+        backgroundColor: "#f3f0e9",
         borderRadius: 8,
       }}
     >
@@ -25,7 +25,7 @@ export default function Icon() {
           style={{
             width: 3,
             height: h,
-            backgroundColor: i === 1 ? "#a89af5" : "#7c6bf0",
+            backgroundColor: i === 1 ? "#e8380d" : "#1b1a18",
             borderRadius: 2,
           }}
         />

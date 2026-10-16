@@ -58,14 +58,14 @@ const Section: FC<{ title: string; children: React.ReactNode }> = ({
   <section
     style={{
       padding: "2rem 0",
-      borderBottom: "1px solid #2a2a2a",
+      borderBottom: "1px solid var(--border)",
     }}
   >
     <h2
       style={{
         fontSize: "1.25rem",
         fontWeight: "bold",
-        color: "#a89af5",
+        color: "var(--accent)",
         marginBottom: "1rem",
       }}
     >
@@ -77,13 +77,13 @@ const Section: FC<{ title: string; children: React.ReactNode }> = ({
 
 const body: React.CSSProperties = {
   fontSize: "1rem",
-  color: "#ccc",
+  color: "var(--text-muted)",
   lineHeight: 1.9,
   margin: "0 0 1rem",
 }
 
 const emphasis: React.CSSProperties = {
-  color: "#f0f0f0",
+  color: "var(--text)",
   fontWeight: "600",
 }
 
@@ -111,7 +111,7 @@ const Page: FC = () => (
         style={{
           fontSize: "clamp(1.75rem, 5vw, 2.5rem)",
           fontWeight: "bold",
-          color: "#f0f0f0",
+          color: "var(--text)",
           lineHeight: 1.3,
           marginBottom: "1rem",
         }}
@@ -121,7 +121,7 @@ const Page: FC = () => (
       <p
         style={{
           fontSize: "1rem",
-          color: "#aaa",
+          color: "var(--text-muted)",
           lineHeight: 1.8,
           maxWidth: "500px",
           margin: "0 auto",
@@ -190,8 +190,8 @@ const Page: FC = () => (
               alignItems: "flex-start",
               padding: ".875rem 1rem",
               backgroundColor: "var(--surface)",
-              borderRadius: ".5rem",
-              border: "1px solid #2d2460",
+              borderRadius: 0,
+              border: "1px solid var(--border)",
             }}
           >
             <span
@@ -207,7 +207,11 @@ const Page: FC = () => (
               {step}
             </span>
             <span
-              style={{ fontSize: ".9375rem", color: "#ccc", lineHeight: 1.6 }}
+              style={{
+                fontSize: ".9375rem",
+                color: "var(--text-muted)",
+                lineHeight: 1.6,
+              }}
             >
               {text}
             </span>
@@ -253,21 +257,27 @@ const Page: FC = () => (
         textAlign: "center",
         padding: "2rem 1rem",
         backgroundColor: "var(--surface)",
-        borderRadius: "1rem",
-        border: "1px solid #2d2460",
+        borderRadius: 0,
+        border: "1px solid var(--border)",
       }}
     >
       <p
         style={{
           fontSize: "1.125rem",
           fontWeight: "bold",
-          color: "#f0f0f0",
+          color: "var(--text)",
           marginBottom: ".5rem",
         }}
       >
         さっそく練習をはじめよう
       </p>
-      <p style={{ fontSize: ".875rem", color: "#888", marginBottom: "1.5rem" }}>
+      <p
+        style={{
+          fontSize: ".875rem",
+          color: "var(--text-muted)",
+          marginBottom: "1.5rem",
+        }}
+      >
         音量に注意して、再生ボタンを押してください
       </p>
       <Link
@@ -275,9 +285,9 @@ const Page: FC = () => (
         style={{
           display: "inline-block",
           padding: ".75rem 2.5rem",
-          borderRadius: ".5rem",
+          borderRadius: 0,
           backgroundColor: "var(--accent)",
-          color: "#fff",
+          color: "var(--paper)",
           textDecoration: "none",
           fontWeight: "bold",
           fontSize: "1rem",

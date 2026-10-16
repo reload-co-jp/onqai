@@ -1,15 +1,21 @@
 import { Logo } from "components/elements/Logo"
-import { Nav } from "components/elements/Nav"
-import { PwaInstallButton } from "components/elements/PwaInstallButton"
+import { Nav, Tracklist } from "components/elements/Nav"
 import type { Metadata, Viewport } from "next"
 import Script from "next/script"
-import { M_PLUS_Rounded_1c } from "next/font/google"
+import { IBM_Plex_Mono, Zen_Kaku_Gothic_New } from "next/font/google"
+import { Footer } from "components/elements/Footer"
 import "./reset.css"
 
-const font = M_PLUS_Rounded_1c({
-  weight: ["400", "700"],
+const font = Zen_Kaku_Gothic_New({
+  weight: ["400", "700", "900"],
   preload: false,
   variable: "--font-body",
+})
+
+const mono = IBM_Plex_Mono({
+  weight: ["400", "500"],
+  subsets: ["latin"],
+  variable: "--font-plex-mono",
 })
 
 const siteUrl = "https://onqai.reload.co.jp"
@@ -79,7 +85,7 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor: "#0d0b1a",
+  themeColor: "#f3f0e9",
 }
 
 const websiteJsonLd = {
@@ -96,7 +102,7 @@ const isProduction = process.env.NODE_ENV === "production"
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <html lang="ja" className={font.variable}>
+    <html lang="ja" className={`${font.variable} ${mono.variable}`}>
       <body>
         {isProduction && (
           <>
@@ -126,38 +132,23 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         <Script id="register-sw" strategy="afterInteractive">
           {`if ('serviceWorker' in navigator) { navigator.serviceWorker.register('/sw.js') }`}
         </Script>
-        <header
-          className="site-header"
-          style={{
-            padding: "1rem var(--gutter)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            gap: "1rem",
-            flexWrap: "wrap",
-          }}
-        >
-          <Logo />
-          <Nav />
+        <header className="site-header">
+          <div
+            style={{
+              padding: ".75rem var(--gutter)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              gap: "1rem",
+            }}
+          >
+            <Logo />
+            <Nav />
+          </div>
+          <Tracklist />
         </header>
-        <main
-          style={{
-            minHeight: "calc(100dvh - 5.625rem)",
-          }}
-        >
-          {children}
-        </main>
-        <footer
-          style={{
-            borderTop: "1px solid var(--border)",
-            color: "var(--text-muted)",
-            fontSize: ".75rem",
-            padding: "2.5rem var(--gutter)",
-          }}
-        >
-          <p>&copy; Onqai</p>
-          <PwaInstallButton />
-        </footer>
+        <main style={{ minHeight: "calc(100dvh - 6rem)" }}>{children}</main>
+        <Footer />
       </body>
     </html>
   )

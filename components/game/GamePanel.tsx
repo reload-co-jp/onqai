@@ -195,167 +195,229 @@ export const GamePanel: FC = () => {
     state.currentNote !== null && state.lastResult === null && !isGameComplete
 
   return (
-    <div
-      className="page"
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        gap: "1.5rem",
-      }}
-    >
-      <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-        <WaveTypeSelector
-          value={state.selectedWaveType}
-          onChange={handleWaveChange}
-        />
-        <DifficultySelector
-          value={state.difficulty}
-          onChange={handleDifficultyChange}
-        />
-      </div>
-
-      <WaveVisualizer isPlaying={isPlaying} />
-
-      <div
+    <section id="game" className="page" aria-labelledby="game-title">
+      <header
         style={{
           display: "flex",
-          gap: ".75rem",
+          justifyContent: "space-between",
+          alignItems: "baseline",
+          gap: "1rem",
           flexWrap: "wrap",
-          alignItems: "center",
+          borderTop: "1px solid var(--rule)",
+          paddingTop: ".75rem",
+          marginBottom: "clamp(1.5rem, 4vw, 3rem)",
         }}
       >
-        <button
-          onClick={handlePlay}
-          disabled={isPlaying || isGameComplete}
-          style={{
-            padding: ".75rem 2rem",
-            borderRadius: ".5rem",
-            border: "none",
-            backgroundColor:
-              isPlaying || isGameComplete ? "#4a4080" : "var(--accent)",
-            color: "#fff",
-            cursor: isPlaying || isGameComplete ? "not-allowed" : "pointer",
-            fontSize: "1rem",
-            fontWeight: "bold",
-          }}
+        <h2
+          id="game-title"
+          style={{ fontSize: "clamp(1.5rem, 4vw, 2.5rem)", fontWeight: 900 }}
         >
-          {isGameComplete
-            ? "結果表示中"
-            : state.currentNote
-              ? "次の問題"
-              : "再生"}
-        </button>
-        {state.currentNote && (
-          <button
-            onClick={handleReplay}
-            disabled={isPlaying}
+          <span
+            className="mono"
             style={{
-              padding: ".75rem 1.25rem",
-              borderRadius: ".5rem",
-              border: "1px solid #555",
-              backgroundColor: "transparent",
-              color: "#f0f0f0",
-              cursor: isPlaying ? "not-allowed" : "pointer",
-              fontSize: "1rem",
+              display: "block",
+              color: "var(--accent)",
+              fontWeight: 500,
             }}
           >
-            もう一度聴く
-          </button>
-        )}
-        <button
-          onClick={handleReset}
-          style={{
-            padding: ".75rem 1rem",
-            borderRadius: ".5rem",
-            border: "1px solid #555",
-            backgroundColor: "transparent",
-            color: "#888",
-            cursor: "pointer",
-            fontSize: ".875rem",
-            marginLeft: "auto",
-          }}
-        >
-          リセット
-        </button>
-      </div>
+            Track 01 — Pitch Quiz
+          </span>
+          音当てゲーム
+        </h2>
+        <p className="mono" style={{ color: "var(--text-muted)" }}>
+          {DIFFICULTY_LABELS[state.difficulty]} /{" "}
+          {WAVE_TYPE_LABELS[state.selectedWaveType]} / {GAME_LIMIT} Questions
+        </p>
+      </header>
 
-      {state.currentNote && (
-        <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-          <PianoKeyboard
-            notes={currentNotes}
-            onAnswer={handleAnswer}
-            disabled={!canAnswer}
-            lastAnswer={state.lastAnswer}
-            lastResult={state.lastResult}
-            currentNote={state.currentNote}
-          />
-          <FeedbackMessage
-            result={state.lastResult}
-            currentNote={state.currentNote}
-          />
-        </div>
-      )}
-
-      <ScoreBoard
-        correctCount={state.correctCount}
-        totalCount={state.totalCount}
-        streak={state.streak}
-      />
-
-      {isGameComplete && (
+      <div className="game-grid">
         <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: ".75rem",
-            padding: "1rem",
-            backgroundColor: "var(--surface)",
-            border: "1px solid var(--accent)",
-            borderRadius: ".5rem",
-          }}
+          className="game-stage"
+          style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}
         >
-          <p style={{ color: "#aaa", fontSize: ".875rem" }}>10問終了</p>
-          <p style={{ fontSize: "1.5rem", fontWeight: "bold" }}>
-            {state.correctCount} / {GAME_LIMIT}問正解（正答率{accuracy}%）
-          </p>
-          <p style={{ color: "#d8d3ff", fontSize: ".9375rem" }}>
-            結果をXでシェアして、次の練習目標にしよう。
+          <ScoreBoard
+            correctCount={state.correctCount}
+            totalCount={state.totalCount}
+            streak={state.streak}
+            limit={GAME_LIMIT}
+          />
+
+          <WaveVisualizer isPlaying={isPlaying} />
+
+          <div
+            style={{
+              display: "flex",
+              gap: ".75rem",
+              flexWrap: "wrap",
+              alignItems: "stretch",
+            }}
+          >
+            <button
+              onClick={handlePlay}
+              disabled={isPlaying || isGameComplete}
+              style={{
+                flex: "1 1 12rem",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: ".75rem",
+                minHeight: "3.5rem",
+                padding: ".875rem 2rem",
+                borderRadius: 0,
+                border: "1px solid var(--rule)",
+                backgroundColor:
+                  isPlaying || isGameComplete
+                    ? "var(--surface)"
+                    : "var(--text)",
+                color:
+                  isPlaying || isGameComplete
+                    ? "var(--text-faint)"
+                    : "var(--paper)",
+                fontSize: "1.0625rem",
+                fontWeight: "bold",
+              }}
+            >
+              <span
+                aria-hidden="true"
+                style={{ color: isPlaying ? "inherit" : "var(--accent)" }}
+              >
+                {isPlaying ? "■" : "▶"}
+              </span>
+              {isGameComplete
+                ? "結果表示中"
+                : state.currentNote
+                  ? "次の問題"
+                  : "再生"}
+            </button>
+            {state.currentNote && (
+              <button
+                onClick={handleReplay}
+                disabled={isPlaying}
+                style={{
+                  minHeight: "3.5rem",
+                  padding: ".75rem 1.25rem",
+                  borderRadius: 0,
+                  border: "1px solid var(--rule)",
+                  backgroundColor: "var(--paper)",
+                  color: isPlaying ? "var(--text-faint)" : "var(--text)",
+                  fontSize: "1rem",
+                }}
+              >
+                ↻ もう一度聴く
+              </button>
+            )}
+          </div>
+
+          {state.currentNote && (
+            <div
+              style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
+            >
+              <PianoKeyboard
+                notes={currentNotes}
+                onAnswer={handleAnswer}
+                disabled={!canAnswer}
+                lastAnswer={state.lastAnswer}
+                lastResult={state.lastResult}
+                currentNote={state.currentNote}
+              />
+              <FeedbackMessage
+                key={state.totalCount}
+                result={state.lastResult}
+                currentNote={state.currentNote}
+              />
+            </div>
+          )}
+
+          {isGameComplete && (
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: ".5rem",
+                padding: "1.25rem",
+                backgroundColor: "var(--paper)",
+                border: "1px solid var(--rule)",
+                borderLeft: "6px solid var(--accent)",
+              }}
+            >
+              <p className="mono" style={{ color: "var(--text-muted)" }}>
+                Session Complete — 10問終了
+              </p>
+              <p style={{ fontSize: "1.5rem", fontWeight: 900 }}>
+                {state.correctCount} / {GAME_LIMIT}問正解（正答率{accuracy}%）
+              </p>
+              <p style={{ color: "var(--text-muted)", fontSize: ".9375rem" }}>
+                結果をXでシェアして、次の練習目標にしよう。
+              </p>
+            </div>
+          )}
+
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: ".75rem",
+              flexWrap: "wrap",
+            }}
+          >
+            <button
+              onClick={handleShare}
+              disabled={!isGameComplete}
+              style={{
+                padding: ".75rem 1.25rem",
+                borderRadius: 0,
+                border: `1px solid ${isGameComplete ? "var(--rule)" : "var(--border)"}`,
+                backgroundColor: isGameComplete
+                  ? "var(--accent)"
+                  : "transparent",
+                color: isGameComplete ? "var(--paper)" : "var(--text-faint)",
+                fontSize: ".9375rem",
+                fontWeight: "bold",
+              }}
+            >
+              Xでシェア
+            </button>
+            {shareMessage && (
+              <p style={{ color: "var(--text-muted)", fontSize: ".875rem" }}>
+                {shareMessage}
+              </p>
+            )}
+            <button
+              onClick={handleReset}
+              style={{
+                padding: ".75rem 1rem",
+                borderRadius: 0,
+                border: "1px solid var(--border)",
+                backgroundColor: "transparent",
+                color: "var(--text-muted)",
+                fontSize: ".875rem",
+                marginLeft: "auto",
+              }}
+            >
+              リセット
+            </button>
+          </div>
+
+          <p className="mono" style={{ color: "var(--text-faint)" }}>
+            <kbd>Space</kbd> 再生 / <kbd>C</kbd>〜<kbd>B</kbd> 音名キーで回答
           </p>
         </div>
-      )}
 
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: ".75rem",
-          flexWrap: "wrap",
-        }}
-      >
-        <button
-          onClick={handleShare}
-          disabled={!isGameComplete}
-          style={{
-            padding: ".75rem 1.25rem",
-            borderRadius: ".5rem",
-            border: "1px solid var(--accent)",
-            backgroundColor: isGameComplete ? "#2d2460" : "#2a2a2a",
-            color: isGameComplete ? "#f0f0f0" : "#666",
-            cursor: isGameComplete ? "pointer" : "not-allowed",
-            fontSize: ".9375rem",
-            fontWeight: "bold",
-          }}
+        <aside
+          className="game-settings"
+          aria-label="ゲーム設定"
+          style={{ display: "flex", flexDirection: "column", gap: "1.75rem" }}
         >
-          Xでシェア
-        </button>
-        {shareMessage && (
-          <p style={{ color: "#aaa", fontSize: ".875rem" }}>{shareMessage}</p>
-        )}
+          <WaveTypeSelector
+            value={state.selectedWaveType}
+            onChange={handleWaveChange}
+          />
+          <DifficultySelector
+            value={state.difficulty}
+            onChange={handleDifficultyChange}
+          />
+        </aside>
       </div>
-
-      <p style={{ fontSize: ".75rem", color: "#555", textAlign: "center" }}>
-        スペースキーで再生 / 音名キー（C〜B）で回答
-      </p>
-    </div>
+    </section>
   )
 }

@@ -15,7 +15,7 @@ export default function OgImage() {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "#1a1a2e",
+        backgroundColor: "#f3f0e9",
         gap: 32,
       }}
     >
@@ -33,7 +33,7 @@ export default function OgImage() {
               width: 24,
               height: h,
               borderRadius: 4,
-              backgroundColor: i === 3 ? "#7c6bf0" : "#4a3fa0",
+              backgroundColor: i === 3 ? "#e8380d" : "#1b1a18",
             }}
           />
         ))}
@@ -51,7 +51,7 @@ export default function OgImage() {
           style={{
             fontSize: 64,
             fontWeight: "bold",
-            color: "#f0f0f0",
+            color: "#1b1a18",
           }}
         >
           音当てゲーム
@@ -59,7 +59,7 @@ export default function OgImage() {
         <div
           style={{
             fontSize: 28,
-            color: "#aaa",
+            color: "#57534c",
           }}
         >
           再生された単音を聴いて、どの音階か当てよう
@@ -79,14 +79,14 @@ export default function OgImage() {
               width: 56,
               height: 56,
               borderRadius: 8,
-              backgroundColor: "#2d2460",
-              border: "2px solid #7c6bf0",
+              backgroundColor: "#1b1a18",
+              border: "2px solid #1b1a18",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               fontSize: 24,
               fontWeight: "bold",
-              color: "#f0f0f0",
+              color: "#f3f0e9",
             }}
           >
             {note}
