@@ -17,6 +17,7 @@ const title = "音当てゲーム"
 const description =
   "再生された単音を聴いて音階を当てる、無料の音感トレーニングゲームです。初級から上級まで、耳の練習や音痴改善の基礎練習に使えます。"
 const ogImage = "/opengraph-image"
+const adsenseClientId = "ca-pub-6542845006087970"
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -60,6 +61,9 @@ export const metadata: Metadata = {
     title: `${title} | 無料の音感トレーニング`,
     description,
     images: [ogImage],
+  },
+  other: {
+    "google-adsense-account": adsenseClientId,
   },
   robots: {
     index: true,
@@ -108,6 +112,11 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
                 gtag('config', '${googleAnalyticsId}');
               `}
             </Script>
+            <Script
+              src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adsenseClientId}`}
+              strategy="afterInteractive"
+              crossOrigin="anonymous"
+            />
           </>
         )}
         <script
